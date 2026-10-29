@@ -24,6 +24,7 @@ Adjust the GitHub path to wherever this repo is hosted. A local clone also works
 | Skill | Invoke | What it does |
 | --- | --- | --- |
 | `init-adlc-project` | `/adlc-toolkit:init-adlc-project` | Captures a project's tech stack, coding standards and architecture in `.adlc-project/PROJECT.md`, and adds a block to the root `AGENTS.md` that tells agents to read it. It detects what the code reveals, confirms it with you, and asks for the rest. It never commits. Run it again to update. |
+| `product-discovery` | `/adlc-toolkit:product-discovery` | The discovery track, the step before `feature-to-spec`. Takes a vague problem to a validated feature document: problem statement with falsification criteria, data evidence, a pause for your user interviews, and a verdict. Re-invoke it after the interviews to continue. |
 | `feature-to-spec` | `/adlc-toolkit:feature-to-spec` | Guides a product owner from a feature idea to a reviewed PRD and spec (what and why), with critique rounds and explicit approval at each step. |
 
 More skills will be added to the toolkit.
