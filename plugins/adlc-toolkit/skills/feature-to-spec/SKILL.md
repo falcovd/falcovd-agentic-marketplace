@@ -71,7 +71,7 @@ Goal: sharpen the feature document before it becomes a PRD.
    - Which assumptions are unspoken?
    - Is the scope bounded, and does it say what is explicitly out?
    - Which dependencies and risks are missing?
-   - Compliance: does the feature touch personal data (HR and absence data are sensitive under the GDPR), automated decisions, or AI functionality? If so, flag the EU AI Act (for example Annex III point 4, employment and worker management) and the GDPR as points of attention. This is a flag, not a legal opinion.
+   - Compliance: does the feature touch personal data (for example employee, health, financial or other sensitive data under the GDPR), automated decisions about people, or AI functionality? If so, flag the GDPR and, where AI is involved, the EU AI Act (check its high-risk categories, such as employment and worker management) as points of attention. This is a flag, not a legal opinion.
 4. Present the findings to the PO, summarised and grouped so they can be handled in few calls. For each finding the PO chooses: accept, reject with a reason, or park as an open question. Update the document and the decision log for each decision straight away. If the PO rejects a compliance flag, respect that and log it; do not argue again.
 5. Stop the critique when no Must findings are open and the PO approves, or when a round brings no new Must findings (the rest is repetition), with a maximum of 3 rounds. After round 3 the PO decides how to continue; do not start a fourth round on your own.
 6. Keep a decision log: finding, decision, reason ("no reason given" is a valid entry).
