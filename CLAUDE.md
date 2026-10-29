@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A Claude Code plugin marketplace ("FalcovD Agentic Marketplace", identifier `falcovd-agentic-marketplace`) containing skills and plugins for agentic work. Current focus: product discovery and product development; more areas will be added. There is no application code, build, or test suite. The content is manifests and `SKILL.md` files.
+A Claude Code plugin marketplace ("FalcovD Agentic Marketplace", identifier `falcovd-agentic-marketplace`) containing skills and plugins for agentic work. Current focus: the `adlc-toolkit` plugin (product development in an Agentic Development Lifecycle way); more areas will be added. There is no application code, build, or test suite. The content is manifests and `SKILL.md` files.
 
 ## Commands
 
