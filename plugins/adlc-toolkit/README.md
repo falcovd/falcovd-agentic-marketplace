@@ -22,8 +22,21 @@ The toolkit covers the stages marked with a skill. The other stages are open: th
 | Feature requirements | `/adlc-toolkit:feature-to-spec` | Available |
 | Technical plan | n/a. Recommended: the superpowers plugin (`superpowers:writing-plans`) | Not in this toolkit |
 | Implementing plan | n/a. Recommended: the superpowers plugin (`superpowers:executing-plans` or `superpowers:subagent-driven-development`) | Not in this toolkit |
-| Verify and testing | n/a | Planned |
-| Deploy | n/a | Planned |
+| Verify and testing | n/a | Not planned |
+| Deploy | n/a | Not planned |
+
+Verify and testing and Deploy are not planned, because everyone tests and deploys in a different way. Use the approach that fits your project.
+
+### Recommended: superpowers plugin
+
+The technical plan and implementing plan stages work well with the superpowers plugin. Install it separately:
+
+```
+/plugin marketplace add obra/superpowers-marketplace
+/plugin install superpowers@superpowers-marketplace
+```
+
+Then use `superpowers:writing-plans` to turn the spec into a plan, and `superpowers:executing-plans` or `superpowers:subagent-driven-development` to implement it.
 
 Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-project`. It gives every later stage the project's tech stack, coding standards and architecture.
 
