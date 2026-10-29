@@ -27,17 +27,6 @@ The toolkit covers the stages marked with a skill. The other stages are open: th
 
 Verify and testing and Deploy are not planned, because everyone tests and deploys in a different way. Use the approach that fits your project.
 
-### Recommended: superpowers plugin
-
-The technical plan and implementing plan stages work well with the superpowers plugin. Install it separately:
-
-```
-/plugin marketplace add obra/superpowers-marketplace
-/plugin install superpowers@superpowers-marketplace
-```
-
-Then use `superpowers:writing-plans` to turn the spec into a plan, and `superpowers:executing-plans` or `superpowers:subagent-driven-development` to implement it.
-
 Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-project`. It gives every later stage the project's tech stack, coding standards and architecture.
 
 ```
@@ -49,6 +38,17 @@ Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-p
         v
 [Technical plan] -> [Implementing plan] -> [Verify and testing] -> [Deploy]
 ```
+
+### Recommended: superpowers plugin
+
+The technical plan and implementing plan stages work well with the superpowers plugin. Install it separately:
+
+```
+/plugin marketplace add obra/superpowers-marketplace
+/plugin install superpowers@superpowers-marketplace
+```
+
+Then use `superpowers:writing-plans` to turn the spec into a plan, and `superpowers:executing-plans` or `superpowers:subagent-driven-development` to implement it.
 
 ## Skills
 
