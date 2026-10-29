@@ -1,6 +1,6 @@
 # adlc-toolkit
 
-Skills that assist product development in an ADLC (Agentic Development Lifecycle) way: work flows from a feature requirement to a reviewed spec, a plan, an implementation, verification and deployment, with AI agents doing the work and people deciding.
+Skills that assist product development in an ADLC (Agentic Development Lifecycle) way: work flows from discovery of a problem to a feature requirement, a reviewed spec, a plan, an implementation, verification and deployment, with AI agents doing the work and people deciding.
 
 ## Install
 
