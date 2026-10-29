@@ -4,25 +4,17 @@
     "name": "Falco van Dooremolen"
   },
   "metadata": {
-    "description": "FalcovD Agentic Marketplace: skills and plugins that make agentic work easier, starting with product discovery and product development.",
+    "description": "FalcovD Agentic Marketplace: skills and plugins that make agentic work easier, starting with the ADLC (Agentic Development Lifecycle) toolkit for product development.",
     "version": "0.1.0"
   },
   "plugins": [
     {
-      "name": "product-discovery",
-      "source": "./plugins/product-discovery",
-      "description": "Skills for product discovery: framing problems, research, and validating opportunities.",
+      "name": "adlc-toolkit",
+      "source": "./plugins/adlc-toolkit",
+      "description": "Skills that assist product development in an ADLC (Agentic Development Lifecycle) way.",
       "version": "0.1.0",
       "category": "product",
-      "keywords": ["product", "discovery", "research"]
-    },
-    {
-      "name": "product-development",
-      "source": "./plugins/product-development",
-      "description": "Skills for product development: turning validated opportunities into specs and deliverable work.",
-      "version": "0.1.0",
-      "category": "product",
-      "keywords": ["product", "development", "specs"]
+      "keywords": ["adlc", "agentic", "development", "lifecycle"]
     }
   ]
 }

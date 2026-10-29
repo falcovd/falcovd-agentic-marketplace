@@ -1,6 +1,6 @@
 # FalcovD Agentic Marketplace
 
-A Claude Code plugin marketplace with skills and plugins that make agentic work easier. The first focus is product discovery and product development. More areas will follow.
+A Claude Code plugin marketplace with skills and plugins that make agentic work easier. The first focus is product development in an Agentic Development Lifecycle (ADLC) way. More areas will follow.
 
 ## Install
 
@@ -8,7 +8,7 @@ In any Claude Code installation:
 
 ```
 /plugin marketplace add falcovd/falcovd-agentic-marketplace
-/plugin install product-discovery@falcovd-agentic-marketplace
+/plugin install adlc-toolkit@falcovd-agentic-marketplace
 ```
 
 Adjust the GitHub path to wherever this repo is hosted. A local clone also works: `/plugin marketplace add /path/to/falcovd-agentic-marketplace`.
@@ -17,8 +17,7 @@ Adjust the GitHub path to wherever this repo is hosted. A local clone also works
 
 | Plugin | Purpose |
 | --- | --- |
-| `product-discovery` | Frame problems, research, validate opportunities |
-| `product-development` | Turn validated opportunities into specs and work |
+| `adlc-toolkit` | Assist product development in an Agentic Development Lifecycle (ADLC) way |
 
 ## Adding a plugin
 

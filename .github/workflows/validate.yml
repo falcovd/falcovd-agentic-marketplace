@@ -28,3 +28,6 @@ jobs:
             claude plugin validate "$dir"
             echo "::endgroup::"
           done
+
+      - name: Check init-adlc-project skill
+        run: bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh

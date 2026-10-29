@@ -1,0 +1,8 @@
+{
+  "name": "adlc-toolkit",
+  "description": "Skills that assist product development in an ADLC (Agentic Development Lifecycle) way.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Falco van Dooremolen"
+  }
+}

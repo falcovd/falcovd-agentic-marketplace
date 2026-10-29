@@ -1,0 +1,8 @@
+{
+  "name": "orders-api",
+  "version": "1.0.0",
+  "author": "Jane Example <jane.example@example.com>",
+  "scripts": { "test": "vitest", "lint": "eslint .", "format": "prettier --write ." },
+  "dependencies": { "express": "^4.19.0", "pg": "^8.11.0" },
+  "devDependencies": { "typescript": "^5.4.0", "vitest": "^1.6.0", "eslint": "^9.0.0", "prettier": "^3.2.0" }
+}
