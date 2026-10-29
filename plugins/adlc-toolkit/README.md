@@ -14,11 +14,12 @@ Skills that assist product development in an ADLC (Agentic Development Lifecycle
 The toolkit covers the stages marked with a skill. The other stages are open: they have no skill here yet, and some have a recommended plugin.
 
 ```
-[Feature requirements] -> [Technical plan] -> [Implementing plan] -> [Verify and testing] -> [Deploy]
+[Discovery] -> [Feature requirements] -> [Technical plan] -> [Implementing plan] -> [Verify and testing] -> [Deploy]
 ```
 
 | Stage | Skill or tool | Status |
 | --- | --- | --- |
+| Discovery | `/adlc-toolkit:product-discovery` | Available |
 | Feature requirements | `/adlc-toolkit:feature-to-spec` | Available |
 | Technical plan | n/a. Recommended: the superpowers plugin (`superpowers:writing-plans`) | Not in this toolkit |
 | Implementing plan | n/a. Recommended: the superpowers plugin (`superpowers:executing-plans` or `superpowers:subagent-driven-development`) | Not in this toolkit |
@@ -31,6 +32,9 @@ Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-p
 
 ```
 /adlc-toolkit:init-adlc-project   (once per project, re-run to update)
+        |
+        v
+[Discovery] -> /adlc-toolkit:product-discovery -> feature.md
         |
         v
 [Feature requirements] -> /adlc-toolkit:feature-to-spec -> spec
@@ -51,6 +55,17 @@ The technical plan and implementing plan stages work well with the superpowers p
 Then use `superpowers:writing-plans` to turn the spec into a plan, and `superpowers:executing-plans` or `superpowers:subagent-driven-development` to implement it.
 
 ## Skills
+
+### `product-discovery`
+
+Run: `/adlc-toolkit:product-discovery`
+
+The discovery track, the step before `feature-to-spec`. Takes a vague problem to a validated feature document.
+
+- Frames the problem and writes a problem statement with falsification criteria set in advance.
+- Gathers data evidence from connected sources, then pauses so you can interview real users.
+- Re-invoke it after the interviews: it judges all evidence against the criteria and, if the problem holds up, writes `feature.md`.
+- Output goes to `discovery/<topic>/`. `feature.md` is the input for `feature-to-spec`.
 
 ### `init-adlc-project`
 
