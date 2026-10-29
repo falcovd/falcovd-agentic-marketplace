@@ -1,0 +1,75 @@
+# adlc-toolkit
+
+Skills that assist product development in an ADLC (Agentic Development Lifecycle) way: work flows from a feature requirement to a reviewed spec, a plan, an implementation, verification and deployment, with AI agents doing the work and people deciding.
+
+## Install
+
+```
+/plugin marketplace add falcovd/falcovd-agentic-marketplace
+/plugin install adlc-toolkit@falcovd-agentic-marketplace
+```
+
+## ADLC workflow
+
+The toolkit covers the stages marked with a skill. The other stages are open: they have no skill here yet, and some have a recommended plugin.
+
+```
+[Feature requirements] -> [Technical plan] -> [Implementing plan] -> [Verify and testing] -> [Deploy]
+```
+
+| Stage | Skill or tool | Status |
+| --- | --- | --- |
+| Feature requirements | `/adlc-toolkit:feature-to-spec` | Available |
+| Technical plan | n/a. Recommended: the superpowers plugin (`superpowers:writing-plans`) | Not in this toolkit |
+| Implementing plan | n/a. Recommended: the superpowers plugin (`superpowers:executing-plans` or `superpowers:subagent-driven-development`) | Not in this toolkit |
+| Verify and testing | n/a | Planned |
+| Deploy | n/a | Planned |
+
+Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-project`. It gives every later stage the project's tech stack, coding standards and architecture.
+
+```
+/adlc-toolkit:init-adlc-project   (once per project, re-run to update)
+        |
+        v
+[Feature requirements] -> /adlc-toolkit:feature-to-spec -> spec
+        |
+        v
+[Technical plan] -> [Implementing plan] -> [Verify and testing] -> [Deploy]
+```
+
+## Skills
+
+### `init-adlc-project`
+
+Run: `/adlc-toolkit:init-adlc-project`
+
+Captures a project's technical context in `.adlc-project/PROJECT.md` and adds a marked block to the root `AGENTS.md`. The block tells agents to read the files in `.adlc-project/` at the start of a session.
+
+- Covers Tech Stack, Coding Standards and System Architecture. UX Guide and API Conventions are optional.
+- Detects what it can from the code, confirms it with you, and asks for everything else. It never assumes.
+- Notes the source of each fact. You can answer "TBD" and fill it in on a later run.
+- Works on existing projects, new projects and repositories with several packages.
+- Writes nothing until you approve the result. Never writes secrets or personal data. Never commits: review and commit the files yourself.
+- Re-running it is the way to update the context.
+
+### `feature-to-spec`
+
+Run: `/adlc-toolkit:feature-to-spec`
+
+Guides a product owner from a feature idea or document to an approved PRD and a spec (what and why, no technical solution).
+
+- Critique rounds by a reviewer with a clean context, and explicit approval at each phase.
+- Open product questions are asked, not parked in the document.
+- Output: `feature.md`, `prd.md`, `spec.md` and `decisions.md`, all in English.
+
+The spec is the input for the technical plan.
+
+## Development
+
+Static checks for `init-adlc-project` run in CI and locally:
+
+```bash
+bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
+```
+
+Manual scenarios for the skill's interactive behaviour are in `plugins/adlc-toolkit/tests/SCENARIOS.md`.
