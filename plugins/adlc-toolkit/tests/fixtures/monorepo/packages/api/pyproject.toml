@@ -1,0 +1,7 @@
+[project]
+name = "api"
+dependencies = ["fastapi", "sqlalchemy"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+[tool.ruff]
+line-length = 100

@@ -19,6 +19,7 @@ Adjust the GitHub path to wherever this repo is hosted. A local clone also works
 | --- | --- |
 | `product-discovery` | Frame problems, research, validate opportunities |
 | `product-development` | Turn validated opportunities into specs and work |
+| `adlc-toolkit` | Assist product development in an Agentic Development Lifecycle (ADLC) way |
 
 ## Adding a plugin
 

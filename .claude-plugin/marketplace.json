@@ -23,6 +23,14 @@
       "version": "0.1.0",
       "category": "product",
       "keywords": ["product", "development", "specs"]
+    },
+    {
+      "name": "adlc-toolkit",
+      "source": "./plugins/adlc-toolkit",
+      "description": "Skills that assist product development in an ADLC (Agentic Development Lifecycle) way.",
+      "version": "0.1.0",
+      "category": "product",
+      "keywords": ["adlc", "agentic", "development", "lifecycle"]
     }
   ]
 }
