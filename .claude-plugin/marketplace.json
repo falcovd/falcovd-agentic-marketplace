@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "FalcovD Agentic Marketplace: skills and plugins that make agentic work easier, starting with the ADLC (Agentic Development Lifecycle) toolkit for product development.",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "adlc-toolkit",
       "source": "./plugins/adlc-toolkit",
       "description": "Skills that assist product development in an ADLC (Agentic Development Lifecycle) way.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "product",
       "keywords": ["adlc", "agentic", "development", "lifecycle"]
     }

@@ -4,6 +4,8 @@ Changes to the marketplace itself (catalog, CI, repository conventions). Each pl
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-30
+
 ### Changed
 - CI is split into one workflow per check: `validate-marketplace`, `validate-plugins` and `test-<plugin>`.
 
@@ -16,5 +18,6 @@ Changes to the marketplace itself (catalog, CI, repository conventions). Each pl
 ### Added
 - Marketplace catalog with the `adlc-toolkit` plugin.
 
-[Unreleased]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.1.0...develop
+[Unreleased]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.2.0...develop
+[0.2.0]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/falcovd/falcovd-agentic-marketplace/releases/tag/v0.1.0
