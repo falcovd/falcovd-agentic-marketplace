@@ -1,0 +1,23 @@
+name: Test adlc-toolkit
+
+on:
+  push:
+    branches: [main, develop]
+    paths: ["plugins/adlc-toolkit/**", ".github/workflows/test-adlc-toolkit.yml"]
+  pull_request:
+    paths: ["plugins/adlc-toolkit/**", ".github/workflows/test-adlc-toolkit.yml"]
+
+jobs:
+  test-adlc-toolkit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run adlc-toolkit tests
+        run: |
+          status=0
+          for t in plugins/adlc-toolkit/tests/check-*.sh; do
+            echo "::group::$t"
+            bash "$t" || status=1
+            echo "::endgroup::"
+          done
+          exit $status

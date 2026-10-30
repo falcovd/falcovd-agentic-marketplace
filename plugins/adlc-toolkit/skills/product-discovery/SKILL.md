@@ -43,9 +43,11 @@ discovery/<topic-slug>/
 
 ## status.md (source of truth for state)
 
-Create it in Phase 1 and update it after every approval:
+Create it in Phase 1 and update it after every approval. The `Thresholds` line holds the confidence thresholds chosen for this run (see Phase 1). Later phases read the values from it. If the line is missing, use the defaults shown above.
 
 ```
+Thresholds: interviews = 5, source types = 2
+
 | Phase | Status | Approved on |
 |---|---|---|
 | 1 Framing | pending / approved | |
@@ -58,7 +60,25 @@ Create it in Phase 1 and update it after every approval:
 
 ## Step 0: Detect state (always first)
 
-Read `status.md` and continue at the first phase that is not approved or done. If `status.md` is missing, infer state from the files present and recreate it, telling the user what you assumed. If a file looks half-written or was edited by the user, ask (AskUserQuestion) before overwriting it. If several topics exist, ask (AskUserQuestion) which one.
+Work in this order:
+
+1. **Topic.** No `discovery/<topic-slug>/` folder, or an empty one: start a new run (`NEW`). Several topic folders: ask (AskUserQuestion) which one (`ASK_TOPIC`).
+2. **Empty files.** An empty artifact file (`framing.md`, `problem-statement.md`, `evidence/interview-guide.md`, `evidence/verdict*.md`, `feature.md`) is half-written. Ask (AskUserQuestion) before overwriting it (`ASK_OVERWRITE`). Ask the same when the user has edited a file since you wrote it.
+3. **With `status.md`:** continue at the first row that is not complete. A row is complete when it says `approved` or `done` (the breakpoint row: `received`). If the breakpoint row says `waiting` but files exist in `evidence/interviews/`, treat it as `received`. If every row is complete, the run is finished (`DONE`): tell the user where `feature.md` is and stop.
+4. **Without `status.md`:** infer the state from the newest artifact present, recreate `status.md`, and tell the user what you assumed. Approval is unknown, so re-show that phase's checkpoint.
+
+| Newest artifact present | Resume at |
+|---|---|
+| none | `NEW` |
+| `framing.md` | `PHASE_1` (framing checkpoint) |
+| `problem-statement.md` | `PHASE_2` (problem statement checkpoint) |
+| a file in `evidence/data/` | `PHASE_3` |
+| `evidence/interview-guide.md` | `BREAKPOINT` |
+| a file in `evidence/interviews/` | `PHASE_4` (start) |
+| `evidence/verdict.md` or `verdict-vN.md` | `PHASE_4` (verdict checkpoint) |
+| `feature.md` | `DONE` |
+
+The resume points map to the phases below: `PHASE_n` is Phase n, `BREAKPOINT` is the stop after Phase 3. The executable form of these rules is `tests/discovery-state.sh`; keep the two in step.
 
 Special cases:
 - Interviews missing at the breakpoint: re-show the interview guide (SendUserFile) and the instructions, do not proceed.
@@ -80,6 +100,13 @@ Challenge thin answers with a follow-up AskUserQuestion, at most two follow-ups 
 - A solution disguised as a problem ("we need a dashboard") is not a problem: ask what is going wrong without it.
 
 Anything still vague after that is written down as an assumption, not as fact. Write the answers to `framing.md`. Do not suggest solutions.
+
+**Confidence thresholds:** also in Phase 1, before any evidence is gathered, ask with AskUserQuestion how strict the confidence rubric should be for this run. Two values are set:
+
+- **Interviews (N):** how many persona-matching interviews are needed for high confidence. Options: 5 (Recommended, default), 3 (quick check), 8 (high stakes).
+- **Source types (S):** how many of the two source types (data, interviews) must support the problem for medium or high confidence. Options: 2 (Recommended, default), 1.
+
+Record them on the `Thresholds` line of `status.md`. They are fixed once the first evidence is gathered, in the same way as the falsification criteria: changing a threshold after seeing the evidence is moving the goalposts. If the user insists, record the change and the reason in `verdict.md`.
 
 **Checkpoint:** send `framing.md` with SendUserFile, then ask with AskUserQuestion: Approve / Change something (user explains via Other). Update `status.md` after approval.
 
@@ -120,7 +147,7 @@ Then continue straight into the breakpoint.
 The skill cannot do this step. Prepare the user, then **stop**.
 
 1. Write `evidence/interview-guide.md`:
-   - Participant profile (must match the persona from the statement) and a suggested minimum of 5 interviews.
+   - Participant profile (must match the persona from the statement) and a suggested minimum of N interviews (the interview threshold from `status.md`).
    - 6 to 10 open, non-leading questions about past behavior and real situations, not hypotheticals ("Tell me about the last time..." rather than "Would you use...").
    - For each assumption, at least one question that could disprove it, especially those the data left untested.
    - A reminder to anonymize notes and to have consent for any recording.
@@ -159,7 +186,7 @@ Contents of `verdict.md`:
 - **Verdict:** `confirmed`, `partially confirmed`, or `refuted`.
 - **Per assumption:** supported / contradicted / untested, with a short reason and references to the evidence files.
 - **Contradicting evidence:** listed explicitly, never omitted.
-- **Triangulation:** which source types support it (data, interviews), how many interviews, and how many matched the persona.
+- **Triangulation:** which source types support it (data, interviews), how many interviews, and how many matched the persona, set against the thresholds N and S from `status.md`.
 - **Confidence:** low / medium / high per the rubric, with the reasons.
 - **Recommendation:** see below.
 
@@ -169,9 +196,10 @@ Rules for the verdict:
 - Do not change the falsification criteria after seeing the evidence. If they turn out to be badly chosen, say so in the verdict and let the user decide.
 
 ### Confidence rubric
-- **High:** at least 5 interviews matching the persona, plus data that agrees, and no significant contradicting evidence.
-- **Medium:** both source types but fewer than 5 matching interviews, or notable contradicting evidence on a non-core assumption.
-- **Low:** only one source type, no interviews, mostly non-matching participants, or the riskiest assumption is untested or contradicted.
+N and S are the thresholds on the `Thresholds` line of `status.md` (defaults: N = 5 interviews, S = 2 source types). State them in the verdict.
+- **High:** at least N interviews matching the persona, at least S source types that agree, and no significant contradicting evidence.
+- **Medium:** at least S source types agree but fewer than N matching interviews, or notable contradicting evidence on a non-core assumption.
+- **Low:** fewer than S source types agree, mostly non-matching participants, or the riskiest assumption is untested or contradicted.
 
 ### Recommendation
 - **Confirmed:** continue to Phase 5.
@@ -182,14 +210,15 @@ Rules for the verdict:
 
 ## Phase 5: Feature document
 
-Write `feature.md` with:
+Write `feature.md` in the format of the shared contract in `../../contracts/feature-document.md`. It is the input for `feature-to-spec`, so follow the headings and rules exactly. Content for each section:
 
-1. **Problem statement:** who has which problem, and the evidence (link to files in `evidence/`, do not copy).
+1. **Problem Statement:** who has which problem, and the evidence (link to files in `evidence/`, do not copy).
 2. **Goals:** the outcomes we want. For each goal give a metric, baseline, target and timeframe (mark unknowns as "to be determined" instead of guessing).
-3. **Requirements:** what must be true for the problem to be solved. Write them as outcomes or conditions, not solutions (not "a dashboard", but "a manager can see X without asking Y"). Link each requirement to the evidence or assumption that justifies it.
-4. **Scope:** what is in, and explicitly what is out.
-5. **Open questions, assumptions and risks.**
-6. **Status:** go / no-go / needs more evidence, with date and owner.
+3. **Requirements:** what must be true for the problem to be solved. Write them as outcomes or conditions, not solutions (not "a dashboard", but "a manager can see X without asking Y"). Link each requirement to a goal and to the evidence or assumption that justifies it.
+4. **Scope:** what is in.
+5. **Out of Scope:** what is explicitly not included.
+6. **Open Questions, Assumptions and Risks.**
+7. **Status:** go / no-go / needs more evidence, with date and owner.
 
 Send `feature.md` with SendUserFile, finish with a two-sentence summary, and ask with AskUserQuestion whether it is approved or what to change. Update `status.md`.
 
@@ -199,4 +228,4 @@ Send `feature.md` with SendUserFile, finish with a two-sentence summary, and ask
 - Questions go through AskUserQuestion; files for review go through SendUserFile before the question is asked.
 - Keep every file short and scannable. Evidence is referenced, never duplicated.
 - Do not invent evidence, quotes or numbers. Unknown means unknown.
-- Reply in the language the user writes in; keep file names and headings in English.
+- **Write every file in English,** whatever language the user writes in. You may talk to the user in their own language, but every file you write, including quotes you summarise, headings and file names, is in English.
