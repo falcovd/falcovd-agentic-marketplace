@@ -36,4 +36,11 @@ for phrase in "never commit" "never assume" "TBD" "adlc-project:start" "template
   check "SKILL.md mentions: $phrase" "grep -qi -- '$phrase' '$skill/SKILL.md'"
 done
 
+# No literal HTML comment markers in running text of SKILL.md (injection detectors flag them); they live in one code block.
+prose_markers="$(awk '/^```/{f=!f; next} !f' "$skill/SKILL.md" | grep -c '<!--')"
+check "SKILL.md has no inline HTML comment markers" "[ '$prose_markers' -eq 0 ]"
+start_count="$(grep -c 'adlc-project:start' "$skill/SKILL.md")"
+check "SKILL.md defines the markers once, in a code block" "[ '$start_count' -eq 1 ]"
+check "SKILL.md states the validation rule for an invalid block" "grep -q 'Validation rule' '$skill/SKILL.md' && grep -q 'invalid state' '$skill/SKILL.md'"
+
 exit $fail

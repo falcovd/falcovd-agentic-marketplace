@@ -52,7 +52,7 @@ Before the PO approves the PRD, and again before the PO approves the spec, go th
 
 ## Phase 0: Intake
 
-1. Ask for the feature document. It should follow the shared contract in `../../contracts/feature-document.md`: Problem Statement, Goals, Requirements, Scope and Out of Scope are required. A `feature.md` from `product-discovery` already does. Check the headings and say which required sections are missing.
+1. Ask for the feature document. Read the shared contract `../../contracts/feature-document.md` first. The feature document should follow it: Problem Statement, Goals, Requirements, Scope and Out of Scope are required. A `feature.md` from `product-discovery` already does. Check the headings and say which required sections are missing.
 2. If there is none, or required sections are missing, interview the PO to fill those five sections, starting with the problem and how the PO knows it exists. If the PO has a source document (for example a test or audit report), ask for the relevant text in plain text and build the document from that. The facts in such a source can change the whole feature: after reading it, say how the framing changed and let the PO confirm before you continue.
 3. Write the result down and let the PO confirm it (see "Presenting documents for approval").
 4. Choose the folder name only after the problem is clear, so it describes the feature (for example `specs/<feature-name>/`). Ask where the output should go; default to `specs/<feature-name>/` in the working directory. If you are in a cloud session, also tell the PO that the files are not on their computer and send them as files at each gate; ask whether to copy them to a folder on the PO's computer when that is possible.
@@ -111,7 +111,7 @@ Process the findings as in Phase 2, resolve the open questions again (see "Resol
 ## Output
 
 Save to the chosen folder:
-- `feature.md`: the final feature document, in the format of `../../contracts/feature-document.md`
+- `feature.md`: the final feature document, in the format of `../../contracts/feature-document.md`. Keep its headings, order and IDs; a change to the format is made in the contract first, not here.
 - `prd.md`
 - `spec.md`
 - `decisions.md`: all findings and decisions with reasons

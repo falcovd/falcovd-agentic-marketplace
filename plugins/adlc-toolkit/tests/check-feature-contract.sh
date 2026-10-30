@@ -21,5 +21,7 @@ for h in "Problem Statement" "Goals" "Requirements" "Scope" "Out of Scope"; do
 done
 check "product-discovery links the contract" "grep -q 'contracts/feature-document.md' '$discovery'"
 check "feature-to-spec links the contract" "grep -q 'contracts/feature-document.md' '$spec'"
+check "product-discovery says the contract changes first" "grep -qi 'contract first' '$discovery'"
+check "feature-to-spec says the contract changes first" "grep -qi 'contract first' '$spec'"
 
 exit $fail

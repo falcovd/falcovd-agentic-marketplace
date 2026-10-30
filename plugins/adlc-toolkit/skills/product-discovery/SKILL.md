@@ -210,7 +210,7 @@ N and S are the thresholds on the `Thresholds` line of `status.md` (defaults: N 
 
 ## Phase 5: Feature document
 
-Write `feature.md` in the format of the shared contract in `../../contracts/feature-document.md`. It is the input for `feature-to-spec`, so follow the headings and rules exactly. Content for each section:
+Read the shared contract `../../contracts/feature-document.md` before you write `feature.md`, and write the file in that format. It is the input for `feature-to-spec`, so use the headings, order, IDs and status values exactly. Do not rename, reorder or drop a section here: a change to the format is made in the contract first, so both skills change together. Content for each section:
 
 1. **Problem Statement:** who has which problem, and the evidence (link to files in `evidence/`, do not copy).
 2. **Goals:** the outcomes we want. For each goal give a metric, baseline, target and timeframe (mark unknowns as "to be determined" instead of guessing).
