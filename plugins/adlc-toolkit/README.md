@@ -108,6 +108,7 @@ Static checks run in CI and locally:
 ```bash
 bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
 bash plugins/adlc-toolkit/tests/check-feature-contract.sh
+bash plugins/adlc-toolkit/tests/check-discovery-state.sh
 ```
 
 Manual scenarios for the skill's interactive behaviour are in `plugins/adlc-toolkit/tests/SCENARIOS.md`.

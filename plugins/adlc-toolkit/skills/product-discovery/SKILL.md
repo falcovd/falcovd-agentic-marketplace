@@ -60,7 +60,25 @@ Thresholds: interviews = 5, source types = 2
 
 ## Step 0: Detect state (always first)
 
-Read `status.md` and continue at the first phase that is not approved or done. If `status.md` is missing, infer state from the files present and recreate it, telling the user what you assumed. If a file looks half-written or was edited by the user, ask (AskUserQuestion) before overwriting it. If several topics exist, ask (AskUserQuestion) which one.
+Work in this order:
+
+1. **Topic.** No `discovery/<topic-slug>/` folder, or an empty one: start a new run (`NEW`). Several topic folders: ask (AskUserQuestion) which one (`ASK_TOPIC`).
+2. **Empty files.** An empty artifact file (`framing.md`, `problem-statement.md`, `evidence/interview-guide.md`, `evidence/verdict*.md`, `feature.md`) is half-written. Ask (AskUserQuestion) before overwriting it (`ASK_OVERWRITE`). Ask the same when the user has edited a file since you wrote it.
+3. **With `status.md`:** continue at the first row that is not complete. A row is complete when it says `approved` or `done` (the breakpoint row: `received`). If the breakpoint row says `waiting` but files exist in `evidence/interviews/`, treat it as `received`. If every row is complete, the run is finished (`DONE`): tell the user where `feature.md` is and stop.
+4. **Without `status.md`:** infer the state from the newest artifact present, recreate `status.md`, and tell the user what you assumed. Approval is unknown, so re-show that phase's checkpoint.
+
+| Newest artifact present | Resume at |
+|---|---|
+| none | `NEW` |
+| `framing.md` | `PHASE_1` (framing checkpoint) |
+| `problem-statement.md` | `PHASE_2` (problem statement checkpoint) |
+| a file in `evidence/data/` | `PHASE_3` |
+| `evidence/interview-guide.md` | `BREAKPOINT` |
+| a file in `evidence/interviews/` | `PHASE_4` (start) |
+| `evidence/verdict.md` or `verdict-vN.md` | `PHASE_4` (verdict checkpoint) |
+| `feature.md` | `DONE` |
+
+The resume points map to the phases below: `PHASE_n` is Phase n, `BREAKPOINT` is the stop after Phase 3. The executable form of these rules is `tests/discovery-state.sh`; keep the two in step.
 
 Special cases:
 - Interviews missing at the breakpoint: re-show the interview guide (SendUserFile) and the instructions, do not proceed.

@@ -34,3 +34,6 @@ jobs:
 
       - name: Check feature document contract
         run: bash plugins/adlc-toolkit/tests/check-feature-contract.sh
+
+      - name: Check product-discovery state detection
+        run: bash plugins/adlc-toolkit/tests/check-discovery-state.sh
