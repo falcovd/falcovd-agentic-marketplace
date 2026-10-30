@@ -10,7 +10,8 @@ A Claude Code plugin marketplace ("FalcovD Agentic Marketplace", identifier `fal
 
 - Validate the marketplace manifest: `claude plugin validate .`
 - Validate one plugin: `claude plugin validate plugins/<name>/`
-- CI (`.github/workflows/validate.yml`) runs both, looping over every `plugins/*/`. Run them locally before opening a PR.
+- Run a plugin's tests: `for t in plugins/<name>/tests/check-*.sh; do bash "$t"; done`
+- CI has one workflow per check, each with a single step after checkout: `validate-marketplace.yml`, `validate-plugins.yml` (loops over every `plugins/*/`) and `test-<name>.yml` per plugin that has tests. Run these locally before opening a PR. A new plugin with tests gets its own `test-<name>.yml`.
 
 ## Architecture
 
