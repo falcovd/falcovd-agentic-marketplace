@@ -4,6 +4,8 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-30
+
 ### Added
 - `product-discovery` skill: takes a vague problem to a validated `feature.md`, with falsification criteria, data evidence, an interview breakpoint and a confidence rubric.
 - Confidence thresholds (interviews, source types) are set at the start of a discovery run and stored in `status.md`.
@@ -22,5 +24,6 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 - `init-adlc-project` skill: captures tech stack, coding standards and architecture in `.adlc-project/PROJECT.md` and adds a block to `AGENTS.md`.
 - `feature-to-spec` skill: turns a feature document into a reviewed PRD and spec, with critique rounds and Product Owner approval.
 
-[Unreleased]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.1.0...develop
+[Unreleased]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.2.0...develop
+[0.2.0]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/falcovd/falcovd-agentic-marketplace/releases/tag/v0.1.0
