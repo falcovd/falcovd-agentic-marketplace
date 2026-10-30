@@ -7,7 +7,7 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 ### Added
 - `product-discovery` skill: takes a vague problem to a validated `feature.md`, with falsification criteria, data evidence, an interview breakpoint and a confidence rubric.
 - Confidence thresholds (interviews, source types) are set at the start of a discovery run and stored in `status.md`.
-- Shared contract for `feature.md` in `contracts/feature-document.md`, used by `product-discovery` and `feature-to-spec`.
+- Shared contract for `feature.md` in `contracts/feature-document.md`, used by `product-discovery` and `feature-to-spec`. Both skills read it before writing or accepting `feature.md` and may not deviate from it except by changing the contract first.
 - Tests: `check-feature-contract.sh` and `check-discovery-state.sh`, with fixtures for every `product-discovery` resume point.
 
 ### Changed
