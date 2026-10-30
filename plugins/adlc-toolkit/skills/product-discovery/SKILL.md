@@ -43,9 +43,11 @@ discovery/<topic-slug>/
 
 ## status.md (source of truth for state)
 
-Create it in Phase 1 and update it after every approval:
+Create it in Phase 1 and update it after every approval. The `Thresholds` line holds the confidence thresholds chosen for this run (see Phase 1). Later phases read the values from it. If the line is missing, use the defaults shown above.
 
 ```
+Thresholds: interviews = 5, source types = 2
+
 | Phase | Status | Approved on |
 |---|---|---|
 | 1 Framing | pending / approved | |
@@ -80,6 +82,13 @@ Challenge thin answers with a follow-up AskUserQuestion, at most two follow-ups 
 - A solution disguised as a problem ("we need a dashboard") is not a problem: ask what is going wrong without it.
 
 Anything still vague after that is written down as an assumption, not as fact. Write the answers to `framing.md`. Do not suggest solutions.
+
+**Confidence thresholds:** also in Phase 1, before any evidence is gathered, ask with AskUserQuestion how strict the confidence rubric should be for this run. Two values are set:
+
+- **Interviews (N):** how many persona-matching interviews are needed for high confidence. Options: 5 (Recommended, default), 3 (quick check), 8 (high stakes).
+- **Source types (S):** how many of the two source types (data, interviews) must support the problem for medium or high confidence. Options: 2 (Recommended, default), 1.
+
+Record them on the `Thresholds` line of `status.md`. They are fixed once the first evidence is gathered, in the same way as the falsification criteria: changing a threshold after seeing the evidence is moving the goalposts. If the user insists, record the change and the reason in `verdict.md`.
 
 **Checkpoint:** send `framing.md` with SendUserFile, then ask with AskUserQuestion: Approve / Change something (user explains via Other). Update `status.md` after approval.
 
@@ -120,7 +129,7 @@ Then continue straight into the breakpoint.
 The skill cannot do this step. Prepare the user, then **stop**.
 
 1. Write `evidence/interview-guide.md`:
-   - Participant profile (must match the persona from the statement) and a suggested minimum of 5 interviews.
+   - Participant profile (must match the persona from the statement) and a suggested minimum of N interviews (the interview threshold from `status.md`).
    - 6 to 10 open, non-leading questions about past behavior and real situations, not hypotheticals ("Tell me about the last time..." rather than "Would you use...").
    - For each assumption, at least one question that could disprove it, especially those the data left untested.
    - A reminder to anonymize notes and to have consent for any recording.
@@ -159,7 +168,7 @@ Contents of `verdict.md`:
 - **Verdict:** `confirmed`, `partially confirmed`, or `refuted`.
 - **Per assumption:** supported / contradicted / untested, with a short reason and references to the evidence files.
 - **Contradicting evidence:** listed explicitly, never omitted.
-- **Triangulation:** which source types support it (data, interviews), how many interviews, and how many matched the persona.
+- **Triangulation:** which source types support it (data, interviews), how many interviews, and how many matched the persona, set against the thresholds N and S from `status.md`.
 - **Confidence:** low / medium / high per the rubric, with the reasons.
 - **Recommendation:** see below.
 
@@ -169,9 +178,10 @@ Rules for the verdict:
 - Do not change the falsification criteria after seeing the evidence. If they turn out to be badly chosen, say so in the verdict and let the user decide.
 
 ### Confidence rubric
-- **High:** at least 5 interviews matching the persona, plus data that agrees, and no significant contradicting evidence.
-- **Medium:** both source types but fewer than 5 matching interviews, or notable contradicting evidence on a non-core assumption.
-- **Low:** only one source type, no interviews, mostly non-matching participants, or the riskiest assumption is untested or contradicted.
+N and S are the thresholds on the `Thresholds` line of `status.md` (defaults: N = 5 interviews, S = 2 source types). State them in the verdict.
+- **High:** at least N interviews matching the persona, at least S source types that agree, and no significant contradicting evidence.
+- **Medium:** at least S source types agree but fewer than N matching interviews, or notable contradicting evidence on a non-core assumption.
+- **Low:** fewer than S source types agree, mostly non-matching participants, or the riskiest assumption is untested or contradicted.
 
 ### Recommendation
 - **Confirmed:** continue to Phase 5.

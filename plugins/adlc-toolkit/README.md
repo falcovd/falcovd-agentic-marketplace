@@ -71,6 +71,7 @@ Run: `/adlc-toolkit:product-discovery`
 The discovery track, the step before `feature-to-spec`. Takes a vague problem to a validated feature document.
 
 - Frames the problem and writes a problem statement with falsification criteria set in advance.
+- Lets you set the confidence thresholds at the start of a run: how many persona-matching interviews count as high confidence (default 5) and how many source types must agree (default 2).
 - Gathers data evidence from connected sources, then pauses so you can interview real users.
 - Re-invoke it after the interviews: it judges all evidence against the criteria and, if the problem holds up, writes `feature.md`.
 - Output goes to `discovery/<topic>/`. `feature.md` is the input for `feature-to-spec`.
