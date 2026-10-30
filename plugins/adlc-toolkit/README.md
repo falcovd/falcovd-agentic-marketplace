@@ -80,7 +80,7 @@ The discovery track, the step before `feature-to-spec`. Takes a vague problem to
 
 Run: `/adlc-toolkit:init-adlc-project`
 
-Captures a project's technical context in `.adlc-project/PROJECT.md` and adds a marked block to the root `AGENTS.md`. The block tells agents to read the files in `.adlc-project/` at the start of a session.
+Captures a project's technical context in `.adlc-project/PROJECT.md` and adds a marked block to the root `AGENTS.md`. The block points agents to the files in `.adlc-project/` so they load them when a session begins.
 
 - Covers Tech Stack, Coding Standards and System Architecture. UX Guide and API Conventions are optional.
 - Detects what it can from the code, confirms it with you, and asks for everything else. It never assumes.
@@ -112,3 +112,7 @@ bash plugins/adlc-toolkit/tests/check-discovery-state.sh
 ```
 
 Manual scenarios for the skill's interactive behaviour are in `plugins/adlc-toolkit/tests/SCENARIOS.md`.
+
+## Changes
+
+See [CHANGELOG.md](CHANGELOG.md). Versions follow [Semantic Versioning](../../VERSIONING.md).

@@ -9,6 +9,7 @@ Changes to the marketplace itself (catalog, CI, repository conventions). Each pl
 
 ### Added
 - Changelogs, a versioning policy and a check that versions and changelogs stay in step.
+- README and CLAUDE.md describe the contracts, tests, CI, versioning and conventions.
 
 ## [0.1.0] - 2026-10-29
 
