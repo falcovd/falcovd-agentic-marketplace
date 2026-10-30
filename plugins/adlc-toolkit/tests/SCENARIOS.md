@@ -63,3 +63,32 @@ Prepare `AGENTS.md` before each run:
 ## S6: language
 
 - AC-8.2: answer all questions in Dutch. The written files are in English.
+
+# Scenarios for product-discovery (Step 0, state detection)
+
+Automated: `plugins/adlc-toolkit/tests/check-discovery-state.sh` runs `discovery-state.sh`, the executable form of the Step 0 rules, over every fixture in `tests/fixtures/discovery/`. It guards the rules and fixtures. It does not run the skill itself, so also run the scenarios below by hand.
+
+## How to run a scenario
+
+```bash
+work="$(mktemp -d)" && cp -R plugins/adlc-toolkit/tests/fixtures/discovery/<case>/discovery "$work/" && cd "$work"
+claude --plugin-dir /absolute/path/to/falcovd-agentic-marketplace/plugins/adlc-toolkit
+# then: /adlc-toolkit:product-discovery
+```
+
+The fixture's `EXPECTED` file names the resume point. Check that the skill's first action matches it, and that it does not redo an earlier phase.
+
+## S8: resume points
+
+- `fresh`, `empty-topic` (`NEW`): starts Phase 1 with the four framing questions.
+- `status-framing-pending`, `nostatus-framing` (`PHASE_1`): re-shows `framing.md` and asks for approval. Does not ask the framing questions again.
+- `status-statement-pending`, `nostatus-statement` (`PHASE_2`): re-shows `problem-statement.md` for approval.
+- `status-data-pending`, `nostatus-data` (`PHASE_3`): continues data evidence and writes the interview guide.
+- `status-waiting-no-interviews`, `nostatus-guide` (`BREAKPOINT`): re-sends the interview guide with the instructions and does not proceed.
+- `status-waiting-but-interviews`, `nostatus-interviews` (`PHASE_4`): extracts the interviews and builds `interview-overview.md`.
+- `nostatus-verdict` (`PHASE_4`, verdict checkpoint): re-shows the latest verdict and asks go / revise / gather more / stop.
+- `status-verdict-approved` (`PHASE_5`): writes `feature.md` per the contract.
+- `status-all-done`, `nostatus-feature` (`DONE`): says the run is finished and where `feature.md` is. Writes nothing.
+- `multiple-topics` (`ASK_TOPIC`): asks which topic to continue.
+- `empty-statement` (`ASK_OVERWRITE`): asks before overwriting the empty `problem-statement.md`.
+- Without `status.md`: the skill recreates it and tells the user what it assumed.

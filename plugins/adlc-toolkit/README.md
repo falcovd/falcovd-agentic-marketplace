@@ -54,6 +54,14 @@ The technical plan and implementing plan stages work well with the superpowers p
 
 Then use `superpowers:writing-plans` to turn the spec into a plan, and `superpowers:executing-plans` or `superpowers:subagent-driven-development` to implement it.
 
+## Language
+
+Every file a skill writes is in English, whatever language you use. This covers `discovery/`, the spec files and `.adlc-project/`. The skills may talk to you in your own language, but never write files in it. One language keeps the output consistent from discovery to spec, so each stage can read the one before it.
+
+## Document contract
+
+`product-discovery` and `feature-to-spec` hand work over through `feature.md`. Its format is defined once in [`contracts/feature-document.md`](contracts/feature-document.md). Both skills follow it, so the chain from discovery to spec keeps working when a skill changes. To change the format, edit the contract first, then both skills, then run `tests/check-feature-contract.sh`.
+
 ## Skills
 
 ### `product-discovery`
@@ -63,6 +71,7 @@ Run: `/adlc-toolkit:product-discovery`
 The discovery track, the step before `feature-to-spec`. Takes a vague problem to a validated feature document.
 
 - Frames the problem and writes a problem statement with falsification criteria set in advance.
+- Lets you set the confidence thresholds at the start of a run: how many persona-matching interviews count as high confidence (default 5) and how many source types must agree (default 2).
 - Gathers data evidence from connected sources, then pauses so you can interview real users.
 - Re-invoke it after the interviews: it judges all evidence against the criteria and, if the problem holds up, writes `feature.md`.
 - Output goes to `discovery/<topic>/`. `feature.md` is the input for `feature-to-spec`.
@@ -71,7 +80,7 @@ The discovery track, the step before `feature-to-spec`. Takes a vague problem to
 
 Run: `/adlc-toolkit:init-adlc-project`
 
-Captures a project's technical context in `.adlc-project/PROJECT.md` and adds a marked block to the root `AGENTS.md`. The block tells agents to read the files in `.adlc-project/` at the start of a session.
+Captures a project's technical context in `.adlc-project/PROJECT.md` and adds a marked block to the root `AGENTS.md`. The block points agents to the files in `.adlc-project/` so they load them when a session begins.
 
 - Covers Tech Stack, Coding Standards and System Architecture. UX Guide and API Conventions are optional.
 - Detects what it can from the code, confirms it with you, and asks for everything else. It never assumes.
@@ -94,10 +103,16 @@ The spec is the input for the technical plan.
 
 ## Development
 
-Static checks for `init-adlc-project` run in CI and locally:
+Static checks run in CI and locally:
 
 ```bash
 bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
+bash plugins/adlc-toolkit/tests/check-feature-contract.sh
+bash plugins/adlc-toolkit/tests/check-discovery-state.sh
 ```
 
 Manual scenarios for the skill's interactive behaviour are in `plugins/adlc-toolkit/tests/SCENARIOS.md`.
+
+## Changes
+
+See [CHANGELOG.md](CHANGELOG.md). Versions follow [Semantic Versioning](../../VERSIONING.md).

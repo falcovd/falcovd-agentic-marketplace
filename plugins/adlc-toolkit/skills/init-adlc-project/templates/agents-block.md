@@ -1,5 +1,5 @@
 <!-- adlc-project:start -->
 ## ADLC project context
 
-At the start of every session, read all files in `.adlc-project/`, beginning with `.adlc-project/PROJECT.md`. They describe this project's tech stack, coding standards and architecture. Follow them when you work in this repository.
+This repository keeps its project context in `.adlc-project/`. `.adlc-project/PROJECT.md` is the entry point. It documents the tech stack, coding standards and architecture, and the other files in that folder add detail. Load the folder when a session begins, and keep changes consistent with what it documents.
 <!-- adlc-project:end -->

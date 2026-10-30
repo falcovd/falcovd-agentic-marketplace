@@ -28,11 +28,19 @@ check "block exists" "[ -f '$blk' ]"
 check "block has one start marker" "[ \"\$(grep -c '<!-- adlc-project:start -->' '$blk')\" -eq 1 ]"
 check "block has one end marker" "[ \"\$(grep -c '<!-- adlc-project:end -->' '$blk')\" -eq 1 ]"
 check "block names .adlc-project/" "grep -q '\\.adlc-project/' '$blk'"
-check "block says to read all files at session start" "grep -qi 'read all files' '$blk' && grep -qi 'start of' '$blk'"
+check "block says to load the folder when a session begins" "grep -qi 'load the folder' '$blk' && grep -qi 'session begins' '$blk'"
+check "block is descriptive, no imperative-override phrasing" "! grep -qiE 'every session|read all|follow them|you must|always|ignore' '$blk'"
 
 # SKILL.md must carry the hard rules (FR-10, FR-18 to FR-22, NFR-2)
 for phrase in "never commit" "never assume" "TBD" "adlc-project:start" "templates/PROJECT.md" "templates/agents-block.md" "250" "125" "English"; do
   check "SKILL.md mentions: $phrase" "grep -qi -- '$phrase' '$skill/SKILL.md'"
 done
+
+# No literal HTML comment markers in running text of SKILL.md (injection detectors flag them); they live in one code block.
+prose_markers="$(awk '/^```/{f=!f; next} !f' "$skill/SKILL.md" | grep -c '<!--')"
+check "SKILL.md has no inline HTML comment markers" "[ '$prose_markers' -eq 0 ]"
+start_count="$(grep -c 'adlc-project:start' "$skill/SKILL.md")"
+check "SKILL.md defines the markers once, in a code block" "[ '$start_count' -eq 1 ]"
+check "SKILL.md states the validation rule for an invalid block" "grep -q 'Validation rule' '$skill/SKILL.md' && grep -q 'invalid state' '$skill/SKILL.md'"
 
 exit $fail

@@ -1,0 +1,19 @@
+name: Validate plugins
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  validate-plugins:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate every plugin
+        run: |
+          for dir in plugins/*/; do
+            echo "::group::$dir"
+            npx --yes @anthropic-ai/claude-code plugin validate "$dir" || exit 1
+            echo "::endgroup::"
+          done
