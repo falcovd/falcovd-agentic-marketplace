@@ -199,4 +199,4 @@ Send `feature.md` with SendUserFile, finish with a two-sentence summary, and ask
 - Questions go through AskUserQuestion; files for review go through SendUserFile before the question is asked.
 - Keep every file short and scannable. Evidence is referenced, never duplicated.
 - Do not invent evidence, quotes or numbers. Unknown means unknown.
-- Reply in the language the user writes in; keep file names and headings in English.
+- **Write every file in English,** whatever language the user writes in. You may talk to the user in their own language, but every file you write, including quotes you summarise, headings and file names, is in English.

@@ -54,6 +54,10 @@ The technical plan and implementing plan stages work well with the superpowers p
 
 Then use `superpowers:writing-plans` to turn the spec into a plan, and `superpowers:executing-plans` or `superpowers:subagent-driven-development` to implement it.
 
+## Language
+
+Every file a skill writes is in English, whatever language you use. This covers `discovery/`, the spec files and `.adlc-project/`. The skills may talk to you in your own language, but never write files in it. One language keeps the output consistent from discovery to spec, so each stage can read the one before it.
+
 ## Skills
 
 ### `product-discovery`
