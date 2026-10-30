@@ -28,7 +28,8 @@ check "block exists" "[ -f '$blk' ]"
 check "block has one start marker" "[ \"\$(grep -c '<!-- adlc-project:start -->' '$blk')\" -eq 1 ]"
 check "block has one end marker" "[ \"\$(grep -c '<!-- adlc-project:end -->' '$blk')\" -eq 1 ]"
 check "block names .adlc-project/" "grep -q '\\.adlc-project/' '$blk'"
-check "block says to read all files at session start" "grep -qi 'read all files' '$blk' && grep -qi 'start of' '$blk'"
+check "block says to load the folder when a session begins" "grep -qi 'load the folder' '$blk' && grep -qi 'session begins' '$blk'"
+check "block is descriptive, no imperative-override phrasing" "! grep -qiE 'every session|read all|follow them|you must|always|ignore' '$blk'"
 
 # SKILL.md must carry the hard rules (FR-10, FR-18 to FR-22, NFR-2)
 for phrase in "never commit" "never assume" "TBD" "adlc-project:start" "templates/PROJECT.md" "templates/agents-block.md" "250" "125" "English"; do
