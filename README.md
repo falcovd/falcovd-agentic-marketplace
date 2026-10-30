@@ -44,3 +44,7 @@ plugins/<plugin>/
 1. Create `plugins/<name>/.claude-plugin/plugin.json` and add skills under `plugins/<name>/skills/<skill>/SKILL.md`.
 2. Register it in `.claude-plugin/marketplace.json`.
 3. Validate with `claude plugin validate .`.
+
+## Versions and changes
+
+Plugins and the marketplace follow [Semantic Versioning](VERSIONING.md). Every release is recorded in a changelog: [marketplace](CHANGELOG.md) and [adlc-toolkit](plugins/adlc-toolkit/CHANGELOG.md).

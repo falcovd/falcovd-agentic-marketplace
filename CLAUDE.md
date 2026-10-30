@@ -36,4 +36,5 @@ This project follows git-flow.
 - `release/<version>`: branch from `develop`; only version bumps and fixes. Merge into `main` and back into `develop`, then tag `v<version>` on `main`.
 - `hotfix/<name>`: branch from `main`; merge into both `main` and `develop`, then tag.
 - Open PRs against `develop` (except release and hotfix branches, which target `main`).
+- Versioning follows SemVer and every change is recorded in a changelog: see `VERSIONING.md`. Add entries under `## [Unreleased]` in the plugin's `CHANGELOG.md` (and the root `CHANGELOG.md` for marketplace changes) on feature branches. Run `bash scripts/check-versions.sh` before a release.
 - Bump `version` in both `plugin.json` and the matching `marketplace.json` entry when a plugin changes in a release, and keep `metadata.version` in `marketplace.json` in step with marketplace releases.
