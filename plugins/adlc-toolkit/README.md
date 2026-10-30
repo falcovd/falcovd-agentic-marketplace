@@ -58,6 +58,10 @@ Then use `superpowers:writing-plans` to turn the spec into a plan, and `superpow
 
 Every file a skill writes is in English, whatever language you use. This covers `discovery/`, the spec files and `.adlc-project/`. The skills may talk to you in your own language, but never write files in it. One language keeps the output consistent from discovery to spec, so each stage can read the one before it.
 
+## Document contract
+
+`product-discovery` and `feature-to-spec` hand work over through `feature.md`. Its format is defined once in [`contracts/feature-document.md`](contracts/feature-document.md). Both skills follow it, so the chain from discovery to spec keeps working when a skill changes. To change the format, edit the contract first, then both skills, then run `tests/check-feature-contract.sh`.
+
 ## Skills
 
 ### `product-discovery`
@@ -98,10 +102,11 @@ The spec is the input for the technical plan.
 
 ## Development
 
-Static checks for `init-adlc-project` run in CI and locally:
+Static checks run in CI and locally:
 
 ```bash
 bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
+bash plugins/adlc-toolkit/tests/check-feature-contract.sh
 ```
 
 Manual scenarios for the skill's interactive behaviour are in `plugins/adlc-toolkit/tests/SCENARIOS.md`.

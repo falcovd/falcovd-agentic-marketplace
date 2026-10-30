@@ -31,3 +31,6 @@ jobs:
 
       - name: Check init-adlc-project skill
         run: bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
+
+      - name: Check feature document contract
+        run: bash plugins/adlc-toolkit/tests/check-feature-contract.sh

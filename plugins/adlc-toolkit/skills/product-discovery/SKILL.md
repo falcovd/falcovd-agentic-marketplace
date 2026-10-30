@@ -182,14 +182,15 @@ Rules for the verdict:
 
 ## Phase 5: Feature document
 
-Write `feature.md` with:
+Write `feature.md` in the format of the shared contract in `../../contracts/feature-document.md`. It is the input for `feature-to-spec`, so follow the headings and rules exactly. Content for each section:
 
-1. **Problem statement:** who has which problem, and the evidence (link to files in `evidence/`, do not copy).
+1. **Problem Statement:** who has which problem, and the evidence (link to files in `evidence/`, do not copy).
 2. **Goals:** the outcomes we want. For each goal give a metric, baseline, target and timeframe (mark unknowns as "to be determined" instead of guessing).
-3. **Requirements:** what must be true for the problem to be solved. Write them as outcomes or conditions, not solutions (not "a dashboard", but "a manager can see X without asking Y"). Link each requirement to the evidence or assumption that justifies it.
-4. **Scope:** what is in, and explicitly what is out.
-5. **Open questions, assumptions and risks.**
-6. **Status:** go / no-go / needs more evidence, with date and owner.
+3. **Requirements:** what must be true for the problem to be solved. Write them as outcomes or conditions, not solutions (not "a dashboard", but "a manager can see X without asking Y"). Link each requirement to a goal and to the evidence or assumption that justifies it.
+4. **Scope:** what is in.
+5. **Out of Scope:** what is explicitly not included.
+6. **Open Questions, Assumptions and Risks.**
+7. **Status:** go / no-go / needs more evidence, with date and owner.
 
 Send `feature.md` with SendUserFile, finish with a two-sentence summary, and ask with AskUserQuestion whether it is approved or what to change. Update `status.md`.
 
