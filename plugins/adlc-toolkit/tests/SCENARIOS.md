@@ -92,3 +92,36 @@ The fixture's `EXPECTED` file names the resume point. Check that the skill's fir
 - `multiple-topics` (`ASK_TOPIC`): asks which topic to continue.
 - `empty-statement` (`ASK_OVERWRITE`): asks before overwriting the empty `problem-statement.md`.
 - Without `status.md`: the skill recreates it and tells the user what it assumed.
+
+# Scenarios for verify-against-spec
+
+Automated: `plugins/adlc-toolkit/tests/check-verification-contract.sh` (contract and skill in step, status rules on fixtures through `verification-status.sh`). The scenarios below cover what a script cannot judge.
+
+## How to run a scenario
+
+```bash
+work="$(mktemp -d)" && cp -R plugins/adlc-toolkit/tests/fixtures/verification/<case>/. "$work" && cd "$work" && git init -q
+claude --plugin-dir /absolute/path/to/falcovd-agentic-marketplace/plugins/adlc-toolkit
+# then: /adlc-toolkit:verify-against-spec
+```
+
+`TEST-RESULTS` and `EXPECTED` in a fixture are for the script only. The skill must not use them as evidence.
+
+## S9: statuses (use the fixtures)
+
+- `all-covered`: every criterion is `covered` with a `file:line` reference and link `id`. Verdict `verified`.
+- `one-uncovered`: AC-1.2 is `uncovered` with a reason. US-1 is `partial`, overall `partial`.
+- `id-boundary`: a mention of AC-1.10 is not evidence for AC-1.1, which is `uncovered`.
+- `none-covered`: an earlier verification report that names the IDs is not evidence. All `uncovered`, overall `unverified`.
+- `manual`: say that AC-1.2 needs a manual check. It becomes `not verifiable` and is listed in Limits.
+- The spec itself is never counted as evidence.
+
+## S10: behaviour
+
+- Spec with a missing heading: the skill stops, lists the headings and points to `feature-to-spec`.
+- Spec without acceptance criteria: the skill stops and says so.
+- A test that matches a criterion by meaning but has no ID: it is shown as an inferred link and asked about. Reject it: the criterion is `uncovered`. Leave it unanswered: it never counts as covered and appears in Limits.
+- Test run: the skill asks once. Answer no: Limits says tests were not run and the Test column says `not run`. Answer yes with a command that fails: the criterion becomes `deviating`.
+- Re-run after `verification-v1.md` exists: it writes `verification-v2.md` with `## Changes Since Previous Version`, keeps `verification-v1.md` unchanged, and re-checks only open criteria.
+- The skill edits no code, test or spec file and commits nothing.
+- Secrets or personal data in an evidence file are not copied into the report.

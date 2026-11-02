@@ -5,6 +5,8 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 ## [Unreleased]
 
 ### Added
+- `verify-against-spec` skill: checks an implemented project against `spec.md`, per acceptance criterion, and writes a versioned `verification-vN.md` with `file:line` evidence, a verdict per user story and the limits.
+- Shared contract for the verification report in `contracts/verification-document.md`, with `check-verification-contract.sh`, a reference status script and fixtures for covered, uncovered, deviating and not verifiable criteria.
 - Shared contract for `spec.md` in `contracts/spec-document.md`: fixed headings, ID formats (`US-n`, `FR-n`, `NFR-n`, `AC-n.m`) and linking rules.
 - `check-spec-contract.sh`: reads the headings from the contract and fails when `feature-to-spec` no longer names one of them.
 
