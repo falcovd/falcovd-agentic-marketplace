@@ -23,26 +23,29 @@ Adjust the GitHub path to wherever this repo is hosted. A local clone also works
 
 | Skill | Invoke | What it does |
 | --- | --- | --- |
-| `init-adlc-project` | `/adlc-toolkit:init-adlc-project` | Captures a project's tech stack, coding standards and architecture in `.adlc-project/PROJECT.md`, and adds a block to the root `AGENTS.md` that points agents to it. It detects what the code reveals, confirms it with you, and asks for the rest. It never commits. Run it again to update. |
+| `init-adlc-project` | `/adlc-toolkit:init-adlc-project` | Captures a project's tech stack, coding standards and architecture in `.adlc-project/PROJECT.md`, and adds a block to the root `AGENTS.md` that points agents to it. It detects what the code reveals, confirms it with you, and asks for the rest. It also offers to add `@AGENTS.md` to `CLAUDE.md`, because Claude Code does not read `AGENTS.md` by itself. It never commits. Run it again to update. |
 | `product-discovery` | `/adlc-toolkit:product-discovery` | The discovery track, the step before `feature-to-spec`. Takes a vague problem to a validated feature document (`feature.md`): problem statement with falsification criteria, data evidence, a pause for your user interviews, and a verdict, with confidence thresholds you set per run. Re-invoke it after the interviews to continue. |
-| `feature-to-spec` | `/adlc-toolkit:feature-to-spec` | Guides a product owner from a feature idea to a reviewed PRD and spec (what and why), with critique rounds and explicit approval at each step. It reads the `feature.md` that `product-discovery` writes. |
+| `feature-to-spec` | `/adlc-toolkit:feature-to-spec` | Guides a product owner from a feature idea to a reviewed PRD and spec (what and why), with critique rounds by the read-only `spec-critic` agent and explicit approval at each step. It reads the `feature.md` that `product-discovery` writes. |
 | `verify-against-spec` | `/adlc-toolkit:verify-against-spec` | Checks an implemented project against its spec: per acceptance criterion it reports covered, uncovered, deviating or not verifiable, with `file:line` evidence, a verdict per user story and the limits. It runs tests only with your yes. |
 | `outcome-review` | `/adlc-toolkit:outcome-review` | Closes the loop after release: compares the goals of a feature document with what was measured, per goal (met, partially met, missed, not measurable, too early), with sources, limits and a recommendation (close, adjust, new discovery or wait). |
-| `spec-change` | `/adlc-toolkit:spec-change` | Handles a change to an approved spec during implementation: proposes the change set, checks it against the spec contract, reports the impact on plan, tests and verification, and after approval updates the spec with a Change History entry and records the decision. IDs are never reused. |
+| `spec-change` | `/adlc-toolkit:spec-change` | Handles a change to an approved spec during implementation: proposes the change set, checks it against the spec contract, reports the impact on plan, tests and verification, and after approval updates the spec with a Change History entry and records the decision. It finds the next free ID and lints the spec with a script. IDs are never reused. |
 | `spec-to-plan` | `/adlc-toolkit:spec-to-plan` | Prepares the step from the spec to the technical plan: gives you a ready-to-copy prompt for `superpowers:writing-plans` with the spec, the project constraints, the technical questions that are still open and the rule that every plan task names the IDs it delivers. The project context file is optional, and the prompt can be handed to another developer. |
 | `adlc-status` | `/adlc-toolkit:adlc-status` | Shows where each feature stands in the chain: the stage, the last approved step, what is waiting for a person and the next skill to run, for discovery topics and spec folders. Read only; implementation and deployment are shown as not tracked. |
 
-All files the skills write are in English, whatever language you speak. The format shared between skills is defined in `plugins/adlc-toolkit/contracts/`. See the [toolkit README](plugins/adlc-toolkit/README.md) for details.
+The toolkit also has one agent, `spec-critic`, and the scripts the skills and checks use. All files the skills write are in English, whatever language you speak. The format shared between skills is defined in `plugins/adlc-toolkit/contracts/`. See the [toolkit README](plugins/adlc-toolkit/README.md) for details.
 
 More skills will be added to the toolkit.
 
 ## Repository layout
 
 ```
+LICENSE                             MIT license
 .claude-plugin/marketplace.json     marketplace catalog
 plugins/<plugin>/
   .claude-plugin/plugin.json        plugin manifest
   skills/<skill>/SKILL.md           one folder per skill
+  agents/                           agent definitions that skills use
+  scripts/                          scripts that skills run or mirror
   contracts/                        formats shared between skills
   tests/                            checks, fixtures and manual scenarios
   CHANGELOG.md                      version history of the plugin
@@ -53,7 +56,7 @@ CHANGELOG.md, VERSIONING.md         marketplace history and versioning policy
 
 ## Adding a plugin
 
-1. Create `plugins/<name>/.claude-plugin/plugin.json`, add skills under `plugins/<name>/skills/<skill>/SKILL.md` and start a `CHANGELOG.md`.
+1. Create `plugins/<name>/.claude-plugin/plugin.json` (with `name`, `description`, `version`, `author`, `license`, `repository` and `keywords`), add skills under `plugins/<name>/skills/<skill>/SKILL.md` and start a `CHANGELOG.md`.
 2. Register it in `.claude-plugin/marketplace.json`.
 3. If it has tests, add a `test-<name>.yml` workflow.
 4. Validate with `claude plugin validate .` and `claude plugin validate plugins/<name>/`, run its tests and run `bash scripts/check-versions.sh`.
@@ -61,6 +64,10 @@ CHANGELOG.md, VERSIONING.md         marketplace history and versioning policy
 ## Contributing
 
 The project follows git-flow: branch from `develop` as `feature/<name>` and open a PR against `develop`. Releases go through `release/<version>` and `main`. The details are in [CLAUDE.md](CLAUDE.md).
+
+## License
+
+[MIT](LICENSE).
 
 ## Versions and changes
 
