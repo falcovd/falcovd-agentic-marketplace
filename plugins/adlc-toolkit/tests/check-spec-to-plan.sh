@@ -58,4 +58,8 @@ check "a fixture covers TBD project fields" "grep -rqF -- '- Tech Stack: Databas
 check "a fixture covers a technical question" "grep -rqF -- '- OQ-1:' '$fixtures'/*/EXPECTED"
 check "a fixture covers a changed spec version" "grep -rqF '(spec v3)' '$fixtures'/*/EXPECTED"
 
+# Fixture files must not be git-ignored: the root .gitignore ignores the local docs/ and specs/ folders,
+# and a fixture that is ignored passes on a machine that has it and fails in CI.
+check "no fixture file is git-ignored" "[ -z \"\$(git -C '$root' ls-files --others --ignored --exclude-standard -- tests/fixtures)\" ]"
+
 exit $fail
