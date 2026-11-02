@@ -4,6 +4,8 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-02
+
 ### Fixed
 - Skills read the shared contracts and `product-discovery` through `${CLAUDE_PLUGIN_ROOT}` instead of a relative `../../` path, which has no documented base directory.
 - `spec-to-plan` and the README name the `superpowers:writing-plans` skill instead of the `/superpowers:write-plan` command.
@@ -54,6 +56,7 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 - `init-adlc-project` skill: captures tech stack, coding standards and architecture in `.adlc-project/PROJECT.md` and adds a block to `AGENTS.md`.
 - `feature-to-spec` skill: turns a feature document into a reviewed PRD and spec, with critique rounds and Product Owner approval.
 
-[Unreleased]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.2.0...develop
+[Unreleased]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.3.0...develop
+[0.3.0]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/falcovd/falcovd-agentic-marketplace/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/falcovd/falcovd-agentic-marketplace/releases/tag/v0.1.0
