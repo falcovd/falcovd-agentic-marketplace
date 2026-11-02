@@ -4,6 +4,13 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+- Shared contract for `spec.md` in `contracts/spec-document.md`: fixed headings, ID formats (`US-n`, `FR-n`, `NFR-n`, `AC-n.m`) and linking rules.
+- `check-spec-contract.sh`: reads the headings from the contract and fails when `feature-to-spec` no longer names one of them.
+
+### Changed
+- `feature-to-spec` reads the spec contract before writing `spec.md` and may not deviate from it except by changing the contract first.
+
 ## [0.2.0] - 2026-10-30
 
 ### Added
