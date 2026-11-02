@@ -1,0 +1,16 @@
+DISCOVERY billing DONE none
+DISCOVERY invoicing BREAKPOINT product-discovery
+DISCOVERY onboarding PHASE_1 product-discovery
+SPEC billing spec version=1 plan=none verification=none outdated=no outcome=none spec-to-plan
+SPEC s01-empty requirements-empty version=- plan=- verification=- outdated=- outcome=- feature-to-spec
+SPEC s02-feature requirements-feature version=- plan=- verification=- outdated=- outcome=- feature-to-spec
+SPEC s03-prd requirements-prd version=- plan=- verification=- outdated=- outcome=- feature-to-spec
+SPEC s05-spec spec version=1 plan=none verification=none outdated=no outcome=none spec-to-plan
+SPEC s06-plan plan version=1 plan=found verification=none outdated=no outcome=none implement
+SPEC s07-verified verification version=1 plan=none verification=verified outdated=no outcome=none outcome-review
+SPEC s08-partial verification version=1 plan=none verification=partial outdated=no outcome=none implement
+SPEC s09-outdated verification version=2 plan=none verification=verified outdated=yes outcome=none verify-against-spec
+SPEC s10-close outcome version=1 plan=none verification=verified outdated=no outcome=achieved none
+SPEC s11-adjust outcome version=1 plan=none verification=verified outdated=no outcome=partly achieved spec-change
+SPEC s12-new-discovery outcome version=1 plan=none verification=none outdated=no outcome=not achieved product-discovery
+SPEC s13-wait outcome version=1 plan=none verification=none outdated=no outcome=inconclusive outcome-review

@@ -1,8 +1,17 @@
 {
   "name": "adlc-toolkit",
   "description": "Skills that assist product development in an ADLC (Agentic Development Lifecycle) way.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
     "name": "Falco van Dooremolen"
-  }
+  },
+  "homepage": "https://github.com/falcovd/falcovd-agentic-marketplace/tree/develop/plugins/adlc-toolkit",
+  "repository": "https://github.com/falcovd/falcovd-agentic-marketplace",
+  "keywords": [
+    "adlc",
+    "agentic",
+    "development",
+    "lifecycle"
+  ],
+  "license": "MIT"
 }
