@@ -160,3 +160,36 @@ Copy only `feature.md`. `MEASUREMENTS` and `EXPECTED` in a fixture are for the s
 - Re-run after `outcome-review-v1.md` exists: it writes `outcome-review-v2.md` with `## Changes Since Previous Version`, keeps `outcome-review-v1.md` unchanged, and asks again only for goals that were `too early` or `not measurable`.
 - The skill edits no file other than the new report, does not start `product-discovery` itself and commits nothing.
 - Secrets or personal data in a data export are not copied into the report.
+
+# Scenarios for spec-change
+
+Automated: `plugins/adlc-toolkit/tests/check-spec-change.sh` (contract amendment and skill in step, ID and link rules on fixtures through `spec-rules.sh`). The scenarios below cover what a script cannot judge.
+
+## How to run a scenario
+
+```bash
+work="$(mktemp -d)" && cp plugins/adlc-toolkit/tests/fixtures/spec-change/<case>/spec.md "$work"/ && cd "$work" && git init -q
+claude --plugin-dir /absolute/path/to/falcovd-agentic-marketplace/plugins/adlc-toolkit
+# then: /adlc-toolkit:spec-change
+```
+
+Use the valid fixtures (`added-ac`, `changed-behaviour`, `removed-ac`, `removed-story`) as the starting spec. To test the impact search, add a plan file or a test file that names an ID, for example `AC-1.1`, and a `verification-v1.md` with a row for it.
+
+## S13: change sets
+
+- Add an edge case to US-1: the new criterion gets the next free ID (highest ever used plus 1) and is listed under `Added`.
+- Change the behaviour of AC-1.1: the skill proposes retiring AC-1.1 and adding a new ID, and asks you to confirm. Pure rewording keeps the ID and is listed under `Changed`.
+- Drop a criterion: it is removed from the Acceptance Criteria section, listed under `Retired`, and its number is never used again.
+- Drop US-2: its acceptance criteria are retired and the skill asks, per functional requirement, whether to relink or retire it.
+- Answer an open question: the answer moves into a requirement or criterion and the question leaves the open questions.
+- Ask for a change that would leave a story without a criterion or create a dangling link: the skill fixes the change set with you before it goes on.
+- Ask for a technical solution: the skill says it belongs in the technical plan and leaves it out.
+
+## S14: behaviour
+
+- The impact step lists `file:line` for each changed or retired ID in plan files, tests and the latest verification report, and says that new IDs have no task or test yet.
+- Approval: nothing is written before you approve. Cancel: `spec.md` and `decisions.md` are unchanged.
+- After approval `spec.md` has a new `## Change History` line with the fields `Added`, `Changed`, `Retired` and `Record`, and `decisions.md` has an `SC-n` record with `Change`, `Reason`, `Approved by` and `Impact`.
+- A second change creates `v3` and `SC-2`, and keeps the first entries unchanged.
+- Plan, test and verification files are not edited, and nothing is committed.
+- The hand-off says that the latest verification report is out of date and to re-run `verify-against-spec`.

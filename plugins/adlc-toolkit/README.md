@@ -23,6 +23,7 @@ The toolkit covers the stages marked with a skill. The other stages are open: th
 | Feature requirements | `/adlc-toolkit:feature-to-spec` | Available |
 | Technical plan | n/a. Recommended: the superpowers plugin (`superpowers:writing-plans`) | Not in this toolkit |
 | Implementing plan | n/a. Recommended: the superpowers plugin (`superpowers:executing-plans` or `superpowers:subagent-driven-development`) | Not in this toolkit |
+| Spec change | `/adlc-toolkit:spec-change` (when the spec changes during implementation) | Available |
 | Verify and testing | `/adlc-toolkit:verify-against-spec` (traces the acceptance criteria of the spec to evidence). Running tests is up to your project | Available |
 | Deploy | n/a | Not planned |
 | Outcome review | `/adlc-toolkit:outcome-review` (compares the goals of the feature document with what was measured after release) | Available |
@@ -63,7 +64,7 @@ Every file a skill writes is in English, whatever language you use. This covers 
 
 `product-discovery` and `feature-to-spec` hand work over through `feature.md`. Its format is defined once in [`contracts/feature-document.md`](contracts/feature-document.md). Both skills follow it, so the chain from discovery to spec keeps working when a skill changes. To change the format, edit the contract first, then both skills, then run `tests/check-feature-contract.sh`.
 
-`feature-to-spec` writes `spec.md`. Skills that come after it read its IDs (`US-n`, `FR-n`, `NFR-n`, `AC-n.m`), so its format is defined once in [`contracts/spec-document.md`](contracts/spec-document.md). To change it, edit the contract first, then the skill, then run `tests/check-spec-contract.sh`.
+`feature-to-spec` writes `spec.md`. Skills that come after it read its IDs (`US-n`, `FR-n`, `NFR-n`, `AC-n.m`), so its format is defined once in [`contracts/spec-document.md`](contracts/spec-document.md). To change it, edit the contract first, then the skill, then run `tests/check-spec-contract.sh`. The same contract defines the optional `## Change History` section and the change record that `spec-change` writes; they are checked by `tests/check-spec-change.sh`.
 
 `verify-against-spec` writes `verification-vN.md`. Its format is defined once in [`contracts/verification-document.md`](contracts/verification-document.md). To change it, edit the contract first, then the skill, then run `tests/check-verification-contract.sh`.
 
@@ -108,6 +109,18 @@ Guides a product owner from a feature idea or document to an approved PRD and a 
 
 The spec is the input for the technical plan.
 
+### `spec-change`
+
+Run: `/adlc-toolkit:spec-change`
+
+Handles a change to an approved spec while the feature is being built, so the plan and the verification do not drift away from it.
+
+- Proposes the change set (added, changed and retired user stories, requirements and acceptance criteria) and checks it against the spec contract.
+- A change of an acceptance criterion's behaviour retires its ID and adds a new one, so old evidence never counts for new behaviour. IDs are never reused.
+- Reports the impact on plan files, tests and the latest verification report, read only.
+- Writes nothing until the product owner approves. Then it updates `spec.md` with a Change History entry and records the decision in `decisions.md`.
+- Never edits plans, tests, code or reports, and never commits.
+
 ### `verify-against-spec`
 
 Run: `/adlc-toolkit:verify-against-spec`
@@ -140,6 +153,7 @@ Static checks run in CI and locally:
 bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
 bash plugins/adlc-toolkit/tests/check-feature-contract.sh
 bash plugins/adlc-toolkit/tests/check-spec-contract.sh
+bash plugins/adlc-toolkit/tests/check-spec-change.sh
 bash plugins/adlc-toolkit/tests/check-verification-contract.sh
 bash plugins/adlc-toolkit/tests/check-outcome-contract.sh
 bash plugins/adlc-toolkit/tests/check-discovery-state.sh

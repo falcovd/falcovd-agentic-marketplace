@@ -5,6 +5,8 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 ## [Unreleased]
 
 ### Added
+- `spec-change` skill: handles a change to an approved spec during implementation. It proposes and checks the change set, reports the impact on plan, tests and verification, and after approval updates `spec.md` with a Change History entry and records the decision in `decisions.md`.
+- Optional `## Change History` section and a change record format (`SC-n`) in the spec contract, with `check-spec-change.sh`, a reference rules script (`spec-rules.sh`) and fixtures for added, changed and removed criteria.
 - `outcome-review` skill: compares the goals of `feature.md` with what was measured after release, per goal, and writes a versioned `outcome-review-vN.md` with sources, limits, an overall verdict and a recommendation (close, adjust, new discovery or wait).
 - Shared contract for the outcome review in `contracts/outcome-document.md`, with `check-outcome-contract.sh`, a reference status script and fixtures for met, partially met, missed, not measurable and too early goals.
 - `verify-against-spec` skill: checks an implemented project against `spec.md`, per acceptance criterion, and writes a versioned `verification-vN.md` with `file:line` evidence, a verdict per user story and the limits.
@@ -13,6 +15,7 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 - `check-spec-contract.sh`: reads the headings from the contract and fails when `feature-to-spec` no longer names one of them.
 
 ### Changed
+- The spec contract now says that a retired item is removed from its section and listed in the Change History, and that a new ID is the highest number ever used plus 1. The ten required headings are unchanged.
 - `feature-to-spec` reads the spec contract before writing `spec.md` and may not deviate from it except by changing the contract first.
 
 ## [0.2.0] - 2026-10-30
