@@ -87,7 +87,9 @@ Goal: sharpen the feature document before it becomes a PRD.
 
 ## Phase 3: Spec
 
-Write the spec from the approved PRD. It always has these five parts, because the PO approves something concrete and verification later needs criteria to check against:
+Read the shared contract `../../contracts/spec-document.md` before you write `spec.md`, and write the file in that format. It has these headings, in this order: `## Definitions`, `## Goal and Success Criteria`, `## User Stories`, `## Functional Requirements`, `## Non-Functional Requirements`, `## Acceptance Criteria`, `## Out of Scope`, `## Assumptions`, `## Dependencies and Risks`, `## Open Questions`. Do not rename, reorder or drop a heading here, and keep the ID formats: a change to the format is made in the contract first, so the contract and this skill change together.
+
+Write the spec from the approved PRD. Five of the parts carry its substance, because the PO approves something concrete and verification later needs criteria to check against:
 
 1. **User stories:** who benefits and how, from the user's perspective. Number them US-1, US-2, and so on.
 2. **Functional requirements:** what the system must do, as specific and measurable behaviour. FR-1, FR-2, and so on, each linked to a user story.
@@ -95,10 +97,10 @@ Write the spec from the approved PRD. It always has these five parts, because th
 4. **Acceptance criteria in Given / When / Then:** binary, testable and complete. Cover the happy path, edge cases and error states. Describe observable behaviour, not the implementation. Number them AC-1.1, AC-1.2, and so on, linked to a user story.
 5. **Explicit out of scope:** what is deliberately not built, to prevent scope creep.
 
-Also carry over from the PRD: the goal and success criteria, the assumptions, the dependencies and risks, and the open questions. Define terms that can be read in two ways at the top of the spec.
+Also carry over from the PRD: the goal and success criteria, the assumptions, the dependencies and risks, and the open questions. Define terms that can be read in two ways under `## Definitions`, at the top of the spec.
 
 Check the spec with a separate clean-context subagent that reads the PRD and the spec, against this checklist:
-- Are all five parts present?
+- Does it follow the contract: every heading present, in order, with IDs in the contract's formats?
 - Does every user story have at least one acceptance criterion, and every requirement a user story or goal?
 - Is every acceptance criterion binary and testable?
 - Is there no technical solution in it?
@@ -113,7 +115,7 @@ Process the findings as in Phase 2, resolve the open questions again (see "Resol
 Save to the chosen folder:
 - `feature.md`: the final feature document, in the format of `../../contracts/feature-document.md`. Keep its headings, order and IDs; a change to the format is made in the contract first, not here.
 - `prd.md`
-- `spec.md`
+- `spec.md`: in the format of `../../contracts/spec-document.md`. Keep its headings, order and IDs; a change to the format is made in the contract first, not here.
 - `decisions.md`: all findings and decisions with reasons
 
 End with a short summary for the PO: what is in the spec, what is still open and why (technical, or decided for later), and that the spec is now ready for refinement with the team. Send the final files (or show them) one last time. Approving the scope happens after that refinement and is the PO's decision, not yours.
