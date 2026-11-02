@@ -18,6 +18,10 @@ for dir in "$here"/fixtures/discovery/*/; do
   check "fixture $name -> $want" "[ '$got' = '$want' ]"
 done
 
+# An optional topic argument looks at one topic only (adlc-status calls it per topic).
+check "topic argument: one of two topics gives its own state" "[ \"\$(bash '$here/discovery-state.sh' '$here/fixtures/discovery/multiple-topics' invoicing-delays)\" = PHASE_1 ]"
+check "topic argument: an unknown topic gives NEW" "[ \"\$(bash '$here/discovery-state.sh' '$here/fixtures/discovery/multiple-topics' no-such-topic)\" = NEW ]"
+
 # Every resume point is covered by at least one fixture.
 for token in NEW ASK_TOPIC ASK_OVERWRITE PHASE_1 PHASE_2 PHASE_3 BREAKPOINT PHASE_4 PHASE_5 DONE; do
   check "a fixture expects $token" "grep -rqx '$token' '$here'/fixtures/discovery/*/EXPECTED"
