@@ -27,6 +27,7 @@ Adjust the GitHub path to wherever this repo is hosted. A local clone also works
 | `product-discovery` | `/adlc-toolkit:product-discovery` | The discovery track, the step before `feature-to-spec`. Takes a vague problem to a validated feature document (`feature.md`): problem statement with falsification criteria, data evidence, a pause for your user interviews, and a verdict, with confidence thresholds you set per run. Re-invoke it after the interviews to continue. |
 | `feature-to-spec` | `/adlc-toolkit:feature-to-spec` | Guides a product owner from a feature idea to a reviewed PRD and spec (what and why), with critique rounds and explicit approval at each step. It reads the `feature.md` that `product-discovery` writes. |
 | `verify-against-spec` | `/adlc-toolkit:verify-against-spec` | Checks an implemented project against its spec: per acceptance criterion it reports covered, uncovered, deviating or not verifiable, with `file:line` evidence, a verdict per user story and the limits. It runs tests only with your yes. |
+| `outcome-review` | `/adlc-toolkit:outcome-review` | Closes the loop after release: compares the goals of a feature document with what was measured, per goal (met, partially met, missed, not measurable, too early), with sources, limits and a recommendation (close, adjust, new discovery or wait). |
 
 All files the skills write are in English, whatever language you speak. The format shared between skills is defined in `plugins/adlc-toolkit/contracts/`. See the [toolkit README](plugins/adlc-toolkit/README.md) for details.
 
