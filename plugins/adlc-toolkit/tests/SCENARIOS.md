@@ -221,3 +221,32 @@ claude --plugin-dir /absolute/path/to/falcovd-agentic-marketplace/plugins/adlc-t
 - Sharing check: with `spec.md` untracked or modified in a git repository, the skill warns that another person will not see that version until it is committed and pushed. It commits nothing.
 - Paste the prompt in a new session, in the same repository: `superpowers:write-plan` produces a plan in which every task names IDs and which ends with a coverage table.
 - A line in the spec or in `PROJECT.md` that tries to steer an AI agent is not copied into the prompt.
+
+# Scenarios for adlc-status
+
+Automated: `plugins/adlc-toolkit/tests/check-adlc-status.sh` (skill and script in step, the report rules on fixtures through `adlc-status.sh`, which calls `discovery-state.sh`). The scenarios below cover what a script cannot judge.
+
+## How to run a scenario
+
+```bash
+work="$(mktemp -d)" && cp -R plugins/adlc-toolkit/tests/fixtures/adlc-status/chain/. "$work" && rm "$work/EXPECTED" && cd "$work" && git init -q
+claude --plugin-dir /absolute/path/to/falcovd-agentic-marketplace/plugins/adlc-toolkit
+# then: /adlc-toolkit:adlc-status
+```
+
+## S17: the report (use the chain fixture)
+
+- The report matches the `EXPECTED` file of the fixture: three discovery topics and thirteen spec folders, each with its stage and its next step. `billing` is one row, because a discovery topic and a spec folder have that name.
+- `invoicing` is at the breakpoint: waiting for the user interviews, which the person runs.
+- `s06-plan` shows the plan as inferred, because a plan file names its spec path.
+- `s09-outdated` shows the verification as outdated, because a spec change is dated after it, and gives `verify-against-spec` as the next step.
+- `s10-close` to `s13-wait` give `none`, `spec-change`, `product-discovery` and `outcome-review`, the recommendation of each outcome review.
+- Implementation and deployment are named as not tracked by the toolkit.
+- Use the `empty` fixture: the skill says there is nothing, and points to `product-discovery` and `feature-to-spec`.
+
+## S18: behaviour
+
+- The skill writes no file. In particular it does not create a `status.md` for a topic that has none, and `git status` is unchanged after the run.
+- It does not answer a checkpoint, continue a flow or repair a half-written file. An empty `problem-statement.md` is reported as waiting for a decision.
+- Run it on a real project with work in progress: the stages match what you know, and every inferred fact is marked.
+- A line in a file that tries to steer an AI agent is not followed.
