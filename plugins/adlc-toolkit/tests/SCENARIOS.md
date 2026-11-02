@@ -125,3 +125,38 @@ claude --plugin-dir /absolute/path/to/falcovd-agentic-marketplace/plugins/adlc-t
 - Re-run after `verification-v1.md` exists: it writes `verification-v2.md` with `## Changes Since Previous Version`, keeps `verification-v1.md` unchanged, and re-checks only open criteria.
 - The skill edits no code, test or spec file and commits nothing.
 - Secrets or personal data in an evidence file are not copied into the report.
+
+# Scenarios for outcome-review
+
+Automated: `plugins/adlc-toolkit/tests/check-outcome-contract.sh` (contract and skill in step, status rules on fixtures through `outcome-status.sh`). The scenarios below cover what a script cannot judge.
+
+## How to run a scenario
+
+```bash
+work="$(mktemp -d)" && cp plugins/adlc-toolkit/tests/fixtures/outcome/<case>/feature.md "$work"/ && cd "$work" && git init -q
+claude --plugin-dir /absolute/path/to/falcovd-agentic-marketplace/plugins/adlc-toolkit
+# then: /adlc-toolkit:outcome-review
+```
+
+Copy only `feature.md`. `MEASUREMENTS` and `EXPECTED` in a fixture are for the script: use the lines of `MEASUREMENTS` as the answers you give to the skill (`value`, `baseline`, `direction`, `too-early` for "the timeframe has not passed").
+
+## S11: statuses (use the fixtures)
+
+- `all-met`: every goal is `met`. Overall `achieved`, recommendation `close`, and Limits says a met target does not prove the feature caused it.
+- `partly-met`: G-2 is `partially met`. Overall `partly achieved`, recommendation `adjust`.
+- `missed`: both goals are `missed`. Overall `not achieved`, recommendation `new discovery`, and `## Findings for Discovery` is filled.
+- `not-measurable`: G-2 has no target, so it is `not measurable` with the reason. Overall `inconclusive`, recommendation `wait`.
+- `too-early`: both timeframes have not passed. Both `too early`, no verdict, overall `inconclusive`.
+- `at-target`: a value exactly at the target is `met`, also for a goal that should go down.
+- `no-baseline`: G-1 has no baseline. The skill asks for it afterwards and asks which way is better. Without either, G-1 is `not measurable`. With `direction up` and a value at or above the target it is `met`. With a value below the target it stays `not measurable`.
+- `baseline-supplied`: give the baseline 10 afterwards. G-1 becomes `partially met` and the report says the baseline was supplied later.
+
+## S12: behaviour
+
+- `feature.md` with a missing heading: the skill stops, lists the headings and points to `feature-to-spec` or `product-discovery`.
+- No goal has both a metric and a target: the skill stops and lists what each goal lacks.
+- A value in the wrong unit or period: the skill asks again before it judges.
+- Connected source: if a data source is connected, the skill offers to pull a value, shows the query, period and sample, and pulls nothing without a yes.
+- Re-run after `outcome-review-v1.md` exists: it writes `outcome-review-v2.md` with `## Changes Since Previous Version`, keeps `outcome-review-v1.md` unchanged, and asks again only for goals that were `too early` or `not measurable`.
+- The skill edits no file other than the new report, does not start `product-discovery` itself and commits nothing.
+- Secrets or personal data in a data export are not copied into the report.

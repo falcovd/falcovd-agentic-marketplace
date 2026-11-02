@@ -14,7 +14,7 @@ Skills that assist product development in an ADLC (Agentic Development Lifecycle
 The toolkit covers the stages marked with a skill. The other stages are open: they have no skill here yet, and some have a recommended plugin.
 
 ```
-[Discovery] -> [Feature requirements] -> [Technical plan] -> [Implementing plan] -> [Verify and testing] -> [Deploy]
+[Discovery] -> [Feature requirements] -> [Technical plan] -> [Implementing plan] -> [Verify and testing] -> [Deploy] -> [Outcome review]
 ```
 
 | Stage | Skill or tool | Status |
@@ -25,6 +25,7 @@ The toolkit covers the stages marked with a skill. The other stages are open: th
 | Implementing plan | n/a. Recommended: the superpowers plugin (`superpowers:executing-plans` or `superpowers:subagent-driven-development`) | Not in this toolkit |
 | Verify and testing | `/adlc-toolkit:verify-against-spec` (traces the acceptance criteria of the spec to evidence). Running tests is up to your project | Available |
 | Deploy | n/a | Not planned |
+| Outcome review | `/adlc-toolkit:outcome-review` (compares the goals of the feature document with what was measured after release) | Available |
 
 Deploy is not planned, because everyone deploys in a different way. Use the approach that fits your project. `verify-against-spec` does not depend on how you test: it checks that the acceptance criteria of the spec are shown to be met.
 
@@ -40,7 +41,7 @@ Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-p
 [Feature requirements] -> /adlc-toolkit:feature-to-spec -> spec
         |
         v
-[Technical plan] -> [Implementing plan] -> [Verify and testing] -> /adlc-toolkit:verify-against-spec -> [Deploy]
+[Technical plan] -> [Implementing plan] -> [Verify and testing] -> /adlc-toolkit:verify-against-spec -> [Deploy] -> [Outcome review] -> /adlc-toolkit:outcome-review
 ```
 
 ### Recommended: superpowers plugin
@@ -65,6 +66,8 @@ Every file a skill writes is in English, whatever language you use. This covers 
 `feature-to-spec` writes `spec.md`. Skills that come after it read its IDs (`US-n`, `FR-n`, `NFR-n`, `AC-n.m`), so its format is defined once in [`contracts/spec-document.md`](contracts/spec-document.md). To change it, edit the contract first, then the skill, then run `tests/check-spec-contract.sh`.
 
 `verify-against-spec` writes `verification-vN.md`. Its format is defined once in [`contracts/verification-document.md`](contracts/verification-document.md). To change it, edit the contract first, then the skill, then run `tests/check-verification-contract.sh`.
+
+`outcome-review` reads the goals of `feature.md` and writes `outcome-review-vN.md`. Its format is defined once in [`contracts/outcome-document.md`](contracts/outcome-document.md). To change it, edit the contract first, then the skill, then run `tests/check-outcome-contract.sh`.
 
 ## Skills
 
@@ -117,6 +120,18 @@ Checks an implemented project against its `spec.md` and reports, per acceptance 
 - Output: `verification-v1.md`, `verification-v2.md`, ... next to `spec.md`. A re-run keeps the earlier versions and re-checks only open criteria.
 - Never edits code, tests or the spec, and never commits.
 
+### `outcome-review`
+
+Run: `/adlc-toolkit:outcome-review`
+
+Closes the loop after release. Compares the goals of `feature.md` (metric, baseline, target, timeframe) with what was measured, and reports per goal whether the target was met, partially met, missed, not measurable or too early.
+
+- You supply the measured values, or a file with the data. If data sources are connected, it offers to pull a value, shows the query and sample, and pulls nothing without your yes.
+- Gives an overall verdict and a recommendation: close, adjust, new discovery or wait. You decide.
+- Says what the data cannot show. A met target does not prove the feature caused it.
+- Output: `outcome-review-v1.md`, `outcome-review-v2.md`, ... next to `feature.md`. For a new discovery round, the report has a section with findings you can cite in `product-discovery`.
+- Never edits `feature.md` or any other file, and never commits.
+
 ## Development
 
 Static checks run in CI and locally:
@@ -126,6 +141,7 @@ bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
 bash plugins/adlc-toolkit/tests/check-feature-contract.sh
 bash plugins/adlc-toolkit/tests/check-spec-contract.sh
 bash plugins/adlc-toolkit/tests/check-verification-contract.sh
+bash plugins/adlc-toolkit/tests/check-outcome-contract.sh
 bash plugins/adlc-toolkit/tests/check-discovery-state.sh
 ```
 

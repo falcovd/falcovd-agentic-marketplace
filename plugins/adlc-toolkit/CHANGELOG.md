@@ -5,6 +5,8 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 ## [Unreleased]
 
 ### Added
+- `outcome-review` skill: compares the goals of `feature.md` with what was measured after release, per goal, and writes a versioned `outcome-review-vN.md` with sources, limits, an overall verdict and a recommendation (close, adjust, new discovery or wait).
+- Shared contract for the outcome review in `contracts/outcome-document.md`, with `check-outcome-contract.sh`, a reference status script and fixtures for met, partially met, missed, not measurable and too early goals.
 - `verify-against-spec` skill: checks an implemented project against `spec.md`, per acceptance criterion, and writes a versioned `verification-vN.md` with `file:line` evidence, a verdict per user story and the limits.
 - Shared contract for the verification report in `contracts/verification-document.md`, with `check-verification-contract.sh`, a reference status script and fixtures for covered, uncovered, deviating and not verifiable criteria.
 - Shared contract for `spec.md` in `contracts/spec-document.md`: fixed headings, ID formats (`US-n`, `FR-n`, `NFR-n`, `AC-n.m`) and linking rules.
