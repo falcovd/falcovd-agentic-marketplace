@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 # Executable form of Step 0 (state detection) in skills/product-discovery/SKILL.md.
-# Usage: discovery-state.sh <dir containing discovery/>
+# Usage: discovery-state.sh <dir containing discovery/> [topic]
+# With a topic name, only discovery/<topic> is looked at (used by adlc-status).
 # Prints one token: NEW ASK_TOPIC ASK_OVERWRITE PHASE_1 PHASE_2 PHASE_3 BREAKPOINT PHASE_4 PHASE_5 DONE
 set -u
 root="${1:?usage: discovery-state.sh <dir containing discovery/>}"
 
 topics=()
-if [ -d "$root/discovery" ]; then
+if [ -n "${2:-}" ]; then
+  [ -d "$root/discovery/$2" ] && topics+=("$root/discovery/$2")
+elif [ -d "$root/discovery" ]; then
   for d in "$root"/discovery/*/; do [ -d "$d" ] && topics+=("${d%/}"); done
 fi
 [ "${#topics[@]}" -eq 0 ] && { echo NEW; exit 0; }

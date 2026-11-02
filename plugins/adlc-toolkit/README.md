@@ -32,6 +32,8 @@ Deploy is not planned, because everyone deploys in a different way. Use the appr
 
 Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-project`. It gives every later stage the project's tech stack, coding standards and architecture.
 
+At any point, run `/adlc-toolkit:adlc-status` to see where each feature stands and what to do next.
+
 ```
 /adlc-toolkit:init-adlc-project   (once per project, re-run to update)
         |
@@ -155,6 +157,17 @@ Closes the loop after release. Compares the goals of `feature.md` (metric, basel
 - Output: `outcome-review-v1.md`, `outcome-review-v2.md`, ... next to `feature.md`. For a new discovery round, the report has a section with findings you can cite in `product-discovery`.
 - Never edits `feature.md` or any other file, and never commits.
 
+### `adlc-status`
+
+Run: `/adlc-toolkit:adlc-status`
+
+Shows where each feature stands in the chain, so that you know what to do next. It only reads: it writes no file.
+
+- Lists discovery topics and spec folders, and shows a topic and a spec folder with the same name as one row.
+- Per item: the stage, the last approved step, what is waiting for a person and the next skill to run.
+- Discovery topics use the same state detection as `product-discovery`. For specs it reads the spec version, the latest verification report (and whether a spec change came after it) and the latest outcome review. A plan counts as found only when a plan file names the spec path, and is shown as inferred.
+- Implementation and deployment are shown as not tracked by the toolkit.
+
 ## Development
 
 Static checks run in CI and locally:
@@ -165,6 +178,7 @@ bash plugins/adlc-toolkit/tests/check-feature-contract.sh
 bash plugins/adlc-toolkit/tests/check-spec-contract.sh
 bash plugins/adlc-toolkit/tests/check-spec-change.sh
 bash plugins/adlc-toolkit/tests/check-spec-to-plan.sh
+bash plugins/adlc-toolkit/tests/check-adlc-status.sh
 bash plugins/adlc-toolkit/tests/check-verification-contract.sh
 bash plugins/adlc-toolkit/tests/check-outcome-contract.sh
 bash plugins/adlc-toolkit/tests/check-discovery-state.sh
