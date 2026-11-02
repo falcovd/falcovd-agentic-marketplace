@@ -62,6 +62,8 @@ Every file a skill writes is in English, whatever language you use. This covers 
 
 `product-discovery` and `feature-to-spec` hand work over through `feature.md`. Its format is defined once in [`contracts/feature-document.md`](contracts/feature-document.md). Both skills follow it, so the chain from discovery to spec keeps working when a skill changes. To change the format, edit the contract first, then both skills, then run `tests/check-feature-contract.sh`.
 
+`feature-to-spec` writes `spec.md`. Skills that come after it read its IDs (`US-n`, `FR-n`, `NFR-n`, `AC-n.m`), so its format is defined once in [`contracts/spec-document.md`](contracts/spec-document.md). To change it, edit the contract first, then the skill, then run `tests/check-spec-contract.sh`.
+
 ## Skills
 
 ### `product-discovery`
@@ -108,6 +110,7 @@ Static checks run in CI and locally:
 ```bash
 bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
 bash plugins/adlc-toolkit/tests/check-feature-contract.sh
+bash plugins/adlc-toolkit/tests/check-spec-contract.sh
 bash plugins/adlc-toolkit/tests/check-discovery-state.sh
 ```
 
