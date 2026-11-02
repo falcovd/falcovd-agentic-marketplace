@@ -4,6 +4,12 @@ Changes to the marketplace itself (catalog, CI, repository conventions). Each pl
 
 ## [Unreleased]
 
+### Changed
+- README and CLAUDE.md describe the current layout (`agents/`, `scripts/`, the MIT license, `${CLAUDE_PLUGIN_ROOT}` paths and the conventions for diagrams, agents and fallbacks).
+
+### Added
+- MIT `LICENSE` in the repository root, and `repository`, `homepage`, `keywords` and `license` in the `adlc-toolkit` manifest.
+
 ## [0.2.0] - 2026-10-30
 
 ### Changed

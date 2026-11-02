@@ -4,7 +4,16 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 
 ## [Unreleased]
 
+### Fixed
+- Skills read the shared contracts and `product-discovery` through `${CLAUDE_PLUGIN_ROOT}` instead of a relative `../../` path, which has no documented base directory.
+- `spec-to-plan` and the README name the `superpowers:writing-plans` skill instead of the `/superpowers:write-plan` command.
+- `product-discovery` shows files in the chat when `SendUserFile` is not available, instead of having no way to get approval.
+- `init-adlc-project` also offers to add `@AGENTS.md` to the root `CLAUDE.md`, because Claude Code does not read `AGENTS.md` by itself.
+- The manual scenarios no longer cite requirement IDs from local, git-ignored specs.
+
 ### Added
+- `spec-critic` agent (`agents/spec-critic.md`): the read-only, clean-context reviewer for the critique rounds of `feature-to-spec`, with the checklists for the feature document, the PRD and the spec. `check-spec-critic.sh` checks it.
+- `license` (MIT), `repository`, `homepage` and `keywords` in `plugin.json`.
 - `adlc-status` skill: a read-only overview of where each feature stands in the chain. Per discovery topic and spec folder it reports the stage, the last approved step, what is waiting for a person and the next skill to run. It reuses the state detection of `product-discovery` and writes no file.
 - `check-adlc-status.sh` with a reference script (`adlc-status.sh`) and fixtures for every stage and every outcome recommendation. `discovery-state.sh` takes an optional topic argument.
 - `spec-to-plan` skill: gives the user a ready-to-copy prompt to continue with `superpowers:writing-plans`, built from `spec.md` and, if it exists, `.adlc-project/PROJECT.md`. The prompt lists the constraints, the open technical questions and the IDs, asks that every plan task names the IDs it delivers, and is self-contained so another developer can use it. It writes no file.
@@ -19,6 +28,9 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 - `check-spec-contract.sh`: reads the headings from the contract and fails when `feature-to-spec` no longer names one of them.
 
 ### Changed
+- The reference scripts moved from `tests/` to `scripts/` (`discovery-state.sh`, `adlc-status.sh`, `spec-rules.sh`, `plan-prompt.sh`, `verification-status.sh`, `outcome-status.sh`). The checks call them there.
+- `spec-change` runs `scripts/spec-rules.sh` to find the next free ID and to lint the edited spec, when Bash is available.
+- `feature-to-spec` uses the `spec-critic` agent for the critique of the feature document, the PRD and the spec, and no longer carries the checklists itself. Behaviour is unchanged.
 - The spec contract now says that a retired item is removed from its section and listed in the Change History, and that a new ID is the highest number ever used plus 1. The ten required headings are unchanged.
 - `feature-to-spec` reads the spec contract before writing `spec.md` and may not deviate from it except by changing the contract first.
 
