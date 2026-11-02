@@ -5,6 +5,8 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 ## [Unreleased]
 
 ### Added
+- `spec-to-plan` skill: gives the user a ready-to-copy prompt to continue with `superpowers:writing-plans`, built from `spec.md` and, if it exists, `.adlc-project/PROJECT.md`. The prompt lists the constraints, the open technical questions and the IDs, asks that every plan task names the IDs it delivers, and is self-contained so another developer can use it. It writes no file.
+- Prompt template `skills/spec-to-plan/templates/plan-prompt.md` with `check-spec-to-plan.sh`, a reference script (`plan-prompt.sh`) and fixtures.
 - `spec-change` skill: handles a change to an approved spec during implementation. It proposes and checks the change set, reports the impact on plan, tests and verification, and after approval updates `spec.md` with a Change History entry and records the decision in `decisions.md`.
 - Optional `## Change History` section and a change record format (`SC-n`) in the spec contract, with `check-spec-change.sh`, a reference rules script (`spec-rules.sh`) and fixtures for added, changed and removed criteria.
 - `outcome-review` skill: compares the goals of `feature.md` with what was measured after release, per goal, and writes a versioned `outcome-review-vN.md` with sources, limits, an overall verdict and a recommendation (close, adjust, new discovery or wait).

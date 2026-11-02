@@ -193,3 +193,31 @@ Use the valid fixtures (`added-ac`, `changed-behaviour`, `removed-ac`, `removed-
 - A second change creates `v3` and `SC-2`, and keeps the first entries unchanged.
 - Plan, test and verification files are not edited, and nothing is committed.
 - The hand-off says that the latest verification report is out of date and to re-run `verify-against-spec`.
+
+# Scenarios for spec-to-plan
+
+Automated: `plugins/adlc-toolkit/tests/check-spec-to-plan.sh` (template and skill in step, the prompt on fixtures through `plan-prompt.sh`). The scenarios below cover what a script cannot judge.
+
+## How to run a scenario
+
+```bash
+work="$(mktemp -d)" && cp -R plugins/adlc-toolkit/tests/fixtures/spec-to-plan/<case>/. "$work" && rm "$work/EXPECTED" && cd "$work" && git init -q
+claude --plugin-dir /absolute/path/to/falcovd-agentic-marketplace/plugins/adlc-toolkit
+# then: /adlc-toolkit:spec-to-plan
+```
+
+## S15: the prompt (use the fixtures)
+
+- `complete`: the prompt matches the `EXPECTED` file of the fixture: it names `specs/sample/spec.md` and `.adlc-project/PROJECT.md`, lists the constraints without the source notes, and lists all IDs with their counts.
+- `change-history`: the prompt says spec v3.
+- `technical-question`: only the technical open question is in the prompt, not the product question.
+- `incomplete-project`: the TBD field is listed as an open point and is not in the constraints.
+- `no-project-context`: no error. The prompt tells the planner to inspect the codebase, and the skill mentions `init-adlc-project` in one line.
+- `no-spec`, `bad-headings`, `no-criteria`: the skill stops with a clear message and the fix (`feature-to-spec`, the missing headings, no acceptance criteria).
+
+## S16: behaviour
+
+- The prompt is shown in one copyable block, with the start command `/superpowers:write-plan`. The skill writes no file and does not start the planning skill.
+- Sharing check: with `spec.md` untracked or modified in a git repository, the skill warns that another person will not see that version until it is committed and pushed. It commits nothing.
+- Paste the prompt in a new session, in the same repository: `superpowers:write-plan` produces a plan in which every task names IDs and which ends with a coverage table.
+- A line in the spec or in `PROJECT.md` that tries to steer an AI agent is not copied into the prompt.
