@@ -23,10 +23,10 @@ The toolkit covers the stages marked with a skill. The other stages are open: th
 | Feature requirements | `/adlc-toolkit:feature-to-spec` | Available |
 | Technical plan | n/a. Recommended: the superpowers plugin (`superpowers:writing-plans`) | Not in this toolkit |
 | Implementing plan | n/a. Recommended: the superpowers plugin (`superpowers:executing-plans` or `superpowers:subagent-driven-development`) | Not in this toolkit |
-| Verify and testing | n/a | Not planned |
+| Verify and testing | `/adlc-toolkit:verify-against-spec` (traces the acceptance criteria of the spec to evidence). Running tests is up to your project | Available |
 | Deploy | n/a | Not planned |
 
-Verify and testing and Deploy are not planned, because everyone tests and deploys in a different way. Use the approach that fits your project.
+Deploy is not planned, because everyone deploys in a different way. Use the approach that fits your project. `verify-against-spec` does not depend on how you test: it checks that the acceptance criteria of the spec are shown to be met.
 
 Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-project`. It gives every later stage the project's tech stack, coding standards and architecture.
 
@@ -40,7 +40,7 @@ Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-p
 [Feature requirements] -> /adlc-toolkit:feature-to-spec -> spec
         |
         v
-[Technical plan] -> [Implementing plan] -> [Verify and testing] -> [Deploy]
+[Technical plan] -> [Implementing plan] -> [Verify and testing] -> /adlc-toolkit:verify-against-spec -> [Deploy]
 ```
 
 ### Recommended: superpowers plugin
@@ -63,6 +63,8 @@ Every file a skill writes is in English, whatever language you use. This covers 
 `product-discovery` and `feature-to-spec` hand work over through `feature.md`. Its format is defined once in [`contracts/feature-document.md`](contracts/feature-document.md). Both skills follow it, so the chain from discovery to spec keeps working when a skill changes. To change the format, edit the contract first, then both skills, then run `tests/check-feature-contract.sh`.
 
 `feature-to-spec` writes `spec.md`. Skills that come after it read its IDs (`US-n`, `FR-n`, `NFR-n`, `AC-n.m`), so its format is defined once in [`contracts/spec-document.md`](contracts/spec-document.md). To change it, edit the contract first, then the skill, then run `tests/check-spec-contract.sh`.
+
+`verify-against-spec` writes `verification-vN.md`. Its format is defined once in [`contracts/verification-document.md`](contracts/verification-document.md). To change it, edit the contract first, then the skill, then run `tests/check-verification-contract.sh`.
 
 ## Skills
 
@@ -103,6 +105,18 @@ Guides a product owner from a feature idea or document to an approved PRD and a 
 
 The spec is the input for the technical plan.
 
+### `verify-against-spec`
+
+Run: `/adlc-toolkit:verify-against-spec`
+
+Checks an implemented project against its `spec.md` and reports, per acceptance criterion, whether it is covered, uncovered, deviating or not verifiable, with `file:line` evidence.
+
+- Finds evidence by the acceptance criterion ID first. If there is none, it matches by meaning and asks you to confirm the link. An unconfirmed link never counts as covered.
+- Reads only by default. It asks once whether to run the project's tests, and runs nothing without your yes.
+- Gives a verdict per user story and an overall verdict, with the limits of what could not be checked.
+- Output: `verification-v1.md`, `verification-v2.md`, ... next to `spec.md`. A re-run keeps the earlier versions and re-checks only open criteria.
+- Never edits code, tests or the spec, and never commits.
+
 ## Development
 
 Static checks run in CI and locally:
@@ -111,6 +125,7 @@ Static checks run in CI and locally:
 bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
 bash plugins/adlc-toolkit/tests/check-feature-contract.sh
 bash plugins/adlc-toolkit/tests/check-spec-contract.sh
+bash plugins/adlc-toolkit/tests/check-verification-contract.sh
 bash plugins/adlc-toolkit/tests/check-discovery-state.sh
 ```
 
