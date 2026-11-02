@@ -52,7 +52,7 @@ Before the PO approves the PRD, and again before the PO approves the spec, go th
 
 ## Phase 0: Intake
 
-1. Ask for the feature document. Read the shared contract `../../contracts/feature-document.md` first. The feature document should follow it: Problem Statement, Goals, Requirements, Scope and Out of Scope are required. A `feature.md` from `product-discovery` already does. Check the headings and say which required sections are missing.
+1. Ask for the feature document. Read the shared contract `${CLAUDE_PLUGIN_ROOT}/contracts/feature-document.md` first. The feature document should follow it: Problem Statement, Goals, Requirements, Scope and Out of Scope are required. A `feature.md` from `product-discovery` already does. Check the headings and say which required sections are missing.
 2. If there is none, or required sections are missing, interview the PO to fill those five sections, starting with the problem and how the PO knows it exists. If the PO has a source document (for example a test or audit report), ask for the relevant text in plain text and build the document from that. The facts in such a source can change the whole feature: after reading it, say how the framing changed and let the PO confirm before you continue.
 3. Write the result down and let the PO confirm it (see "Presenting documents for approval").
 4. Choose the folder name only after the problem is clear, so it describes the feature (for example `specs/<feature-name>/`). Ask where the output should go; default to `specs/<feature-name>/` in the working directory. If you are in a cloud session, also tell the PO that the files are not on their computer and send them as files at each gate; ask whether to copy them to a folder on the PO's computer when that is possible.
@@ -62,32 +62,24 @@ Before the PO approves the PRD, and again before the PO approves the spec, go th
 
 Goal: sharpen the feature document before it becomes a PRD.
 
-1. Run the critique in a separate subagent with a clean context. Give it the feature document, the checklist below and, from round 2 on, the list of findings the PO already decided on (accepted, rejected, parked), with the instruction not to repeat those and to look only for new weaknesses and contradictions. A reviewer that sees the reasoning behind the document tends to agree with it, so do not give it this conversation.
-2. Instruct the subagent to play devil's advocate: look for weaknesses, not confirmation. For each finding it gives the problem, why it matters, and a class: **Must**, **Should** or **Could**.
-3. Checklist:
-   - Is the problem evidenced (who has it, how often, how do we know)?
-   - Are the goals measurable and not just a restatement of the solution?
-   - Is every requirement unambiguous, readable in one way only?
-   - Which assumptions are unspoken?
-   - Is the scope bounded, and does it say what is explicitly out?
-   - Which dependencies and risks are missing?
-   - Compliance: does the feature touch personal data (for example employee, health, financial or other sensitive data under the GDPR), automated decisions about people, or AI functionality? If so, flag the GDPR and, where AI is involved, the EU AI Act (check its high-risk categories, such as employment and worker management) as points of attention. This is a flag, not a legal opinion.
-4. Present the findings to the PO, summarised and grouped so they can be handled in few calls. For each finding the PO chooses: accept, reject with a reason, or park as an open question. Update the document and the decision log for each decision straight away. If the PO rejects a compliance flag, respect that and log it; do not argue again.
-5. Stop the critique when no Must findings are open and the PO approves, or when a round brings no new Must findings (the rest is repetition), with a maximum of 3 rounds. After round 3 the PO decides how to continue; do not start a fourth round on your own.
-6. Keep a decision log: finding, decision, reason ("no reason given" is a valid entry).
-7. Present the updated feature document and the log for approval before moving on.
+1. Run the critique with the `spec-critic` agent (mode `feature`), which has a clean context and read-only tools. Its instructions and checklists are in `${CLAUDE_PLUGIN_ROOT}/agents/spec-critic.md`. If the agent is not available as an agent type, start a general subagent and give it the content of that file. Give it the path of the feature document and, from round 2 on, the list of findings the PO already decided on (accepted, rejected, parked). A reviewer that sees the reasoning behind the document tends to agree with it, so do not give it this conversation.
+2. It plays devil's advocate and returns findings with the problem, why it matters, and a class: **Must**, **Should** or **Could**. The checklist, including the compliance flag for GDPR and the EU AI Act, lives in the agent file.
+3. Present the findings to the PO, summarised and grouped so they can be handled in few calls. For each finding the PO chooses: accept, reject with a reason, or park as an open question. Update the document and the decision log for each decision straight away. If the PO rejects a compliance flag, respect that and log it; do not argue again.
+4. Stop the critique when no Must findings are open and the PO approves, or when a round brings no new Must findings (the rest is repetition), with a maximum of 3 rounds. After round 3 the PO decides how to continue; do not start a fourth round on your own.
+5. Keep a decision log: finding, decision, reason ("no reason given" is a valid entry).
+6. Present the updated feature document and the log for approval before moving on.
 
 ## Phase 2: PRD
 
 1. Convert the approved feature document into a PRD with these sections: Summary, Problem, Users, Goals and success metrics, Non-goals, Requirements (functional and non-functional), Scope and out of scope, Assumptions, Dependencies and risks (including compliance), Open questions. Trace each requirement to a goal.
-2. Check it with a separate clean-context subagent that reads the feature document and the PRD: does every requirement trace to a goal, is anything in the PRD that was not in the feature document without being marked as an assumption or open question, is anything missing, and is anything contradictory?
+2. Check it with the `spec-critic` agent in mode `prd`, giving it the paths of the feature document and the PRD. Its checklist is in `${CLAUDE_PLUGIN_ROOT}/agents/spec-critic.md`.
 3. Process the findings: fix editorial and mechanical issues yourself and tell the PO; ask the PO about anything that needs a decision.
 4. Resolve the open questions (see "Resolving open questions").
 5. Present the PRD for approval. Repeat until the PO approves, with a maximum of 3 rounds.
 
 ## Phase 3: Spec
 
-Read the shared contract `../../contracts/spec-document.md` before you write `spec.md`, and write the file in that format. It has these headings, in this order: `## Definitions`, `## Goal and Success Criteria`, `## User Stories`, `## Functional Requirements`, `## Non-Functional Requirements`, `## Acceptance Criteria`, `## Out of Scope`, `## Assumptions`, `## Dependencies and Risks`, `## Open Questions`. Do not rename, reorder or drop a heading here, and keep the ID formats: a change to the format is made in the contract first, so the contract and this skill change together.
+Read the shared contract `${CLAUDE_PLUGIN_ROOT}/contracts/spec-document.md` before you write `spec.md`, and write the file in that format. It has these headings, in this order: `## Definitions`, `## Goal and Success Criteria`, `## User Stories`, `## Functional Requirements`, `## Non-Functional Requirements`, `## Acceptance Criteria`, `## Out of Scope`, `## Assumptions`, `## Dependencies and Risks`, `## Open Questions`. Do not rename, reorder or drop a heading here, and keep the ID formats: a change to the format is made in the contract first, so the contract and this skill change together.
 
 Write the spec from the approved PRD. Five of the parts carry its substance, because the PO approves something concrete and verification later needs criteria to check against:
 
@@ -99,23 +91,16 @@ Write the spec from the approved PRD. Five of the parts carry its substance, bec
 
 Also carry over from the PRD: the goal and success criteria, the assumptions, the dependencies and risks, and the open questions. Define terms that can be read in two ways under `## Definitions`, at the top of the spec.
 
-Check the spec with a separate clean-context subagent that reads the PRD and the spec, against this checklist:
-- Does it follow the contract: every heading present, in order, with IDs in the contract's formats?
-- Does every user story have at least one acceptance criterion, and every requirement a user story or goal?
-- Is every acceptance criterion binary and testable?
-- Is there no technical solution in it?
-- Are there terms that can be read in two ways?
-- Does every risk in the PRD map to a requirement or an explicit decision not to address it?
-- Is anything in the spec that is not in the PRD without being marked as an assumption or open question?
+Check the spec with the `spec-critic` agent in mode `spec`, giving it the paths of the PRD and the spec. Its checklist (contract conformance, a criterion for every story, testable criteria, no technical solution, ambiguous terms, risks mapped to requirements, nothing in the spec that is not in the PRD) is in `${CLAUDE_PLUGIN_ROOT}/agents/spec-critic.md`.
 
 Process the findings as in Phase 2, resolve the open questions again (see "Resolving open questions"), then present the spec for approval. Repeat until the PO approves, with a maximum of 3 rounds.
 
 ## Output
 
 Save to the chosen folder:
-- `feature.md`: the final feature document, in the format of `../../contracts/feature-document.md`. Keep its headings, order and IDs; a change to the format is made in the contract first, not here.
+- `feature.md`: the final feature document, in the format of `${CLAUDE_PLUGIN_ROOT}/contracts/feature-document.md`. Keep its headings, order and IDs; a change to the format is made in the contract first, not here.
 - `prd.md`
-- `spec.md`: in the format of `../../contracts/spec-document.md`. Keep its headings, order and IDs; a change to the format is made in the contract first, not here.
+- `spec.md`: in the format of `${CLAUDE_PLUGIN_ROOT}/contracts/spec-document.md`. Keep its headings, order and IDs; a change to the format is made in the contract first, not here.
 - `decisions.md`: all findings and decisions with reasons
 
 End with a short summary for the PO: what is in the spec, what is still open and why (technical, or decided for later), and that the spec is now ready for refinement with the team. Send the final files (or show them) one last time. Approving the scope happens after that refinement and is the PO's decision, not yours.

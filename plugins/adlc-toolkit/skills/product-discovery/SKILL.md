@@ -21,7 +21,9 @@ One flow, one breakpoint. The skill works through framing, problem statement and
 2. Send it immediately with SendUserFile (one call, all files for that moment together).
 3. Only then ask for the approval or feedback with AskUserQuestion.
 
-Never ask for approval of a file the user has not been shown. Do not paste the full file into the chat as a substitute, and do not tell the user to go and look in a directory. Keep the chat text to a 2 to 3 line summary of what the file contains and what you need from them.
+Never ask for approval of a file the user has not been shown. Do not tell the user to go and look in a directory. Keep the chat text to a 2 to 3 line summary of what the file contains and what you need from them.
+
+**If SendUserFile is not available** (for example in a terminal session), show the full content of the file in the chat instead, then ask for approval. For a long file, show it in parts. Every "send with SendUserFile" below means this.
 
 ## Working directory
 
@@ -78,7 +80,7 @@ Work in this order:
 | `evidence/verdict.md` or `verdict-vN.md` | `PHASE_4` (verdict checkpoint) |
 | `feature.md` | `DONE` |
 
-The resume points map to the phases below: `PHASE_n` is Phase n, `BREAKPOINT` is the stop after Phase 3. The executable form of these rules is `tests/discovery-state.sh`; keep the two in step.
+The resume points map to the phases below: `PHASE_n` is Phase n, `BREAKPOINT` is the stop after Phase 3. The executable form of these rules is `scripts/discovery-state.sh`; keep the two in step.
 
 Special cases:
 - Interviews missing at the breakpoint: re-show the interview guide (SendUserFile) and the instructions, do not proceed.
@@ -210,7 +212,7 @@ N and S are the thresholds on the `Thresholds` line of `status.md` (defaults: N 
 
 ## Phase 5: Feature document
 
-Read the shared contract `../../contracts/feature-document.md` before you write `feature.md`, and write the file in that format. It is the input for `feature-to-spec`, so use the headings, order, IDs and status values exactly. Do not rename, reorder or drop a section here: a change to the format is made in the contract first, so both skills change together. Content for each section:
+Read the shared contract `${CLAUDE_PLUGIN_ROOT}/contracts/feature-document.md` before you write `feature.md`, and write the file in that format. It is the input for `feature-to-spec`, so use the headings, order, IDs and status values exactly. Do not rename, reorder or drop a section here: a change to the format is made in the contract first, so both skills change together. Content for each section:
 
 1. **Problem Statement:** who has which problem, and the evidence (link to files in `evidence/`, do not copy).
 2. **Goals:** the outcomes we want. For each goal give a metric, baseline, target and timeframe (mark unknowns as "to be determined" instead of guessing).

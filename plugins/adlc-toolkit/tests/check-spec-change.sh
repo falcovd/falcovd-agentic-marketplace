@@ -5,7 +5,7 @@ set -u
 root="$(cd "$(dirname "$0")/.." && pwd)"
 contract="$root/contracts/spec-document.md"
 skill="$root/skills/spec-change/SKILL.md"
-rules="$root/tests/spec-rules.sh"
+rules="$root/scripts/spec-rules.sh"
 fixtures="$root/tests/fixtures/spec-change"
 fail=0
 
@@ -34,6 +34,7 @@ done
 check "SKILL.md links the spec contract" "grep -q 'contracts/spec-document.md' '$skill'"
 check "SKILL.md says the contract changes first" "grep -qi 'contract first' '$skill'"
 check "SKILL.md names the Change History heading" "grep -qF '\`## Change History\`' '$skill'"
+check "SKILL.md points to the rules script" "grep -q 'scripts/spec-rules.sh' '$skill'"
 for phrase in "Nothing is written before" "Never commit" "Never edit plans" "Do not invent facts" "SendUserFile" "AskUserQuestion" "decisions.md"; do
   check "SKILL.md mentions: $phrase" "grep -qF -- '$phrase' '$skill'"
 done

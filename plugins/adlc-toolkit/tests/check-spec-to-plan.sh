@@ -5,7 +5,7 @@ set -u
 root="$(cd "$(dirname "$0")/.." && pwd)"
 skill="$root/skills/spec-to-plan/SKILL.md"
 template="$root/skills/spec-to-plan/templates/plan-prompt.md"
-script="$root/tests/plan-prompt.sh"
+script="$root/scripts/plan-prompt.sh"
 fixtures="$root/tests/fixtures/spec-to-plan"
 fail=0
 
@@ -36,7 +36,7 @@ check "template uses paths relative to the repository root" "grep -q 'relative t
 check "SKILL.md links the spec contract" "grep -q 'contracts/spec-document.md' '$skill'"
 check "SKILL.md links the template" "grep -q 'templates/plan-prompt.md' '$skill'"
 check "SKILL.md says the project context is optional" "grep -q 'not required' '$skill'"
-for phrase in "Never edit the spec" "Never write the plan" "Never commit" "Do not invent facts" "feature-to-spec" "init-adlc-project" "/superpowers:write-plan" "AskUserQuestion" "uncommitted"; do
+for phrase in "Never edit the spec" "Never write the plan" "Never commit" "Do not invent facts" "feature-to-spec" "init-adlc-project" "superpowers:writing-plans" "AskUserQuestion" "uncommitted"; do
   check "SKILL.md mentions: $phrase" "grep -qF -- '$phrase' '$skill'"
 done
 

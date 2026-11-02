@@ -5,7 +5,7 @@ set -u
 root="$(cd "$(dirname "$0")/.." && pwd)"
 contract="$root/contracts/verification-document.md"
 skill="$root/skills/verify-against-spec/SKILL.md"
-resolver="$root/tests/verification-status.sh"
+resolver="$root/scripts/verification-status.sh"
 fixtures="$root/tests/fixtures/verification"
 fail=0
 

@@ -4,7 +4,7 @@
 set -u
 root="$(cd "$(dirname "$0")/.." && pwd)"
 skill="$root/skills/adlc-status/SKILL.md"
-script="$root/tests/adlc-status.sh"
+script="$root/scripts/adlc-status.sh"
 fixtures="$root/tests/fixtures/adlc-status"
 discovery="$root/tests/fixtures/discovery"
 fail=0

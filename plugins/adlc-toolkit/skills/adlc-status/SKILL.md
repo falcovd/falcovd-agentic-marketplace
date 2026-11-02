@@ -29,7 +29,7 @@ If there is nothing, say so and point to `product-discovery` for a new problem o
 
 ## Step 1: Discovery topics
 
-For each topic, apply Step 0 of `product-discovery` (the section "Step 0: Detect state" in `../product-discovery/SKILL.md`), read only. Do not restate its rules here, and do not do the parts of it that write files or ask questions: you only need the resume point it ends at.
+For each topic, apply Step 0 of `product-discovery` (the section "Step 0: Detect state" in `${CLAUDE_PLUGIN_ROOT}/skills/product-discovery/SKILL.md`), read only. Do not restate its rules here, and do not do the parts of it that write files or ask questions: you only need the resume point it ends at.
 
 The resume point is one of `NEW`, `PHASE_1` to `PHASE_5`, `BREAKPOINT`, `ASK_OVERWRITE` or `DONE`. Give the stage in words, the last approved step (the last row of `status.md` that is approved, done or received, when the file exists), and what is waiting for a person:
 

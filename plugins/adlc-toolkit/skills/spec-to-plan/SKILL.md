@@ -22,7 +22,7 @@ Use this skill whenever the user wants to move from the spec to the plan, even i
 
 1. Find `spec.md`, normally at `specs/<feature>/spec.md`. If there are several, ask which feature.
 2. If there is none, stop and say so: the spec comes from `feature-to-spec`.
-3. Read `../../contracts/spec-document.md` and check the headings of `spec.md` against it. If headings are missing, stop and list them. Do not guess.
+3. Read `${CLAUDE_PLUGIN_ROOT}/contracts/spec-document.md` and check the headings of `spec.md` against it. If headings are missing, stop and list them. Do not guess.
 4. If the spec has no acceptance criteria, stop and say so.
 
 ## Step 1: Project context (optional)
@@ -57,7 +57,7 @@ If the project is a git repository and `spec.md` is untracked or has uncommitted
 ## Step 5: Hand over
 
 1. Show the filled prompt in one block that is easy to copy.
-2. Say how to use it: in Claude Code, start the planning with `/superpowers:write-plan` followed by the prompt, in this session or a new one. Another person can paste the same prompt in their own session, once `spec.md` is in their copy of the repository.
+2. Say how to use it: in Claude Code, paste the prompt as a message, in this session or a new one. It asks Claude to use the `superpowers:writing-plans` skill. Another person can paste the same prompt in their own session, once `spec.md` is in their copy of the repository.
 3. If the `superpowers` plugin is not installed, point to the install lines in the toolkit README. The prompt also works without it, because it asks for the same rules.
 4. Say what comes after the plan: implement it, and use `verify-against-spec` to check the result against the acceptance criteria.
 
