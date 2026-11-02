@@ -21,7 +21,7 @@ The toolkit covers the stages marked with a skill. The other stages are open: th
 | --- | --- | --- |
 | Discovery | `/adlc-toolkit:product-discovery` | Available |
 | Feature requirements | `/adlc-toolkit:feature-to-spec` | Available |
-| Technical plan | n/a. Recommended: the superpowers plugin (`superpowers:writing-plans`) | Not in this toolkit |
+| Technical plan | `/adlc-toolkit:spec-to-plan` prepares the prompt for the plan. The plan itself is written by the superpowers plugin (`superpowers:writing-plans`) | Prompt: available. Plan: superpowers |
 | Implementing plan | n/a. Recommended: the superpowers plugin (`superpowers:executing-plans` or `superpowers:subagent-driven-development`) | Not in this toolkit |
 | Spec change | `/adlc-toolkit:spec-change` (when the spec changes during implementation) | Available |
 | Verify and testing | `/adlc-toolkit:verify-against-spec` (traces the acceptance criteria of the spec to evidence). Running tests is up to your project | Available |
@@ -42,7 +42,7 @@ Before the first stage, prepare the project once with `/adlc-toolkit:init-adlc-p
 [Feature requirements] -> /adlc-toolkit:feature-to-spec -> spec
         |
         v
-[Technical plan] -> [Implementing plan] -> [Verify and testing] -> /adlc-toolkit:verify-against-spec -> [Deploy] -> [Outcome review] -> /adlc-toolkit:outcome-review
+[Technical plan] -> /adlc-toolkit:spec-to-plan -> [Implementing plan] -> [Verify and testing] -> /adlc-toolkit:verify-against-spec -> [Deploy] -> [Outcome review] -> /adlc-toolkit:outcome-review
 ```
 
 ### Recommended: superpowers plugin
@@ -54,7 +54,7 @@ The technical plan and implementing plan stages work well with the superpowers p
 /plugin install superpowers@superpowers-marketplace
 ```
 
-Then use `superpowers:writing-plans` to turn the spec into a plan, and `superpowers:executing-plans` or `superpowers:subagent-driven-development` to implement it.
+Then run `/adlc-toolkit:spec-to-plan` to get the prompt for the plan, and give that prompt to Claude with `/superpowers:write-plan`. Use `superpowers:executing-plans` or `superpowers:subagent-driven-development` to implement the plan.
 
 ## Language
 
@@ -109,6 +109,16 @@ Guides a product owner from a feature idea or document to an approved PRD and a 
 
 The spec is the input for the technical plan.
 
+### `spec-to-plan`
+
+Run: `/adlc-toolkit:spec-to-plan`
+
+Prepares the step from the spec to the technical plan. It gives you a ready-to-copy prompt for Claude, to continue with `superpowers:writing-plans`. It writes no plan and no file.
+
+- The prompt points to `spec.md` and, if it exists, `.adlc-project/PROJECT.md`, and summarises the project constraints. Without a project context file it tells the planner to inspect the codebase, so `init-adlc-project` is not required.
+- It lists the IDs of the spec and the technical questions the spec left for the plan, and asks that every plan task names the IDs it delivers and that the plan ends with a coverage table.
+- The prompt is self-contained, so another developer can use it in their own session. The skill warns when `spec.md` is not committed yet.
+
 ### `spec-change`
 
 Run: `/adlc-toolkit:spec-change`
@@ -154,6 +164,7 @@ bash plugins/adlc-toolkit/tests/check-init-adlc-project.sh
 bash plugins/adlc-toolkit/tests/check-feature-contract.sh
 bash plugins/adlc-toolkit/tests/check-spec-contract.sh
 bash plugins/adlc-toolkit/tests/check-spec-change.sh
+bash plugins/adlc-toolkit/tests/check-spec-to-plan.sh
 bash plugins/adlc-toolkit/tests/check-verification-contract.sh
 bash plugins/adlc-toolkit/tests/check-outcome-contract.sh
 bash plugins/adlc-toolkit/tests/check-discovery-state.sh

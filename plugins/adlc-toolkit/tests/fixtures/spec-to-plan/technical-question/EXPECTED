@@ -1,0 +1,35 @@
+Write the implementation plan for Sample feature. Use superpowers:writing-plans if it is available; otherwise write the plan to the same rules.
+
+This prompt is self-contained and can be used by anyone, in any session. All paths are relative to the repository root.
+
+Read first:
+- specs/sample/spec.md (spec v1): what to build. Do not change it. If it is wrong or unclear, stop and ask.
+- .adlc-project/PROJECT.md: the project's tech stack, coding standards and architecture.
+
+Constraints from the project context:
+Tech Stack:
+- Languages: TypeScript
+- Frameworks: Express
+Coding Standards:
+- Formatting: Prettier
+- Testing strategy: Vitest, unit tests next to the code
+System Architecture:
+- Architecture style: Layered monolith
+
+Open points in the project context (TBD, settle or ask):
+None
+
+Technical questions the spec left for the plan (settle each one):
+- OQ-1: Which queue should carry the events?
+
+The spec has these IDs (user stories 2, functional requirements 2, non-functional requirements 1, acceptance criteria 3):
+- User stories: US-1, US-2
+- Functional requirements: FR-1, FR-2
+- Non-functional requirements: NFR-1
+- Acceptance criteria: AC-1.1, AC-1.2, AC-2.1
+
+Rules for the plan:
+- Every task names the US, FR, NFR and AC IDs it delivers.
+- End the plan with a coverage table: every FR, NFR and AC ID and the task that delivers it. An ID without a task is a gap: flag it.
+- Add no behaviour that is not in the spec. Technical choices follow the constraints above.
+- Save the plan where the project keeps plans (docs/plans/ by default).
