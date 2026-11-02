@@ -35,6 +35,9 @@ for phrase in "Read only" "Write no file" "status.md" "not tracked" "inferred" "
   check "SKILL.md mentions: $phrase" "grep -qiF -- '$phrase' '$skill'"
 done
 
+# Git does not track empty folders: a fixture that relies on one passes locally and fails on a fresh checkout.
+check "no fixture folder is empty" "[ -z \"\$(find '$root/tests/fixtures' -type d -empty)\" ]"
+
 # The report on fixtures: the script is the executable form of the rules.
 check "script exists" "[ -f '$script' ]"
 for dir in "$fixtures"/*/; do
