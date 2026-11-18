@@ -45,10 +45,11 @@ discovery/<topic-slug>/
 
 ## status.md (source of truth for state)
 
-Create it in Phase 1 and update it after every approval. The `Thresholds` line holds the confidence thresholds chosen for this run (see Phase 1). Later phases read the values from it. If the line is missing, use the defaults shown above.
+Create it in Phase 1 and update it after every approval. The `Thresholds` line holds the confidence thresholds chosen for this run (see Phase 1). Later phases read the values from it. If the line is missing, use the defaults shown above. The `Language` line holds the output language for the files (see "General rules"); if it is missing, use English.
 
 ```
 Thresholds: interviews = 5, source types = 2
+Language: English
 
 | Phase | Status | Approved on |
 |---|---|---|
@@ -108,7 +109,9 @@ Anything still vague after that is written down as an assumption, not as fact. W
 - **Interviews (N):** how many persona-matching interviews are needed for high confidence. Options: 5 (Recommended, default), 3 (quick check), 8 (high stakes).
 - **Source types (S):** how many of the two source types (data, interviews) must support the problem for medium or high confidence. Options: 2 (Recommended, default), 1.
 
-Record them on the `Thresholds` line of `status.md`. They are fixed once the first evidence is gathered, in the same way as the falsification criteria: changing a threshold after seeing the evidence is moving the goalposts. If the user insists, record the change and the reason in `verdict.md`.
+**Output language:** if the user's input is not in English, ask in the same call whether the files are written in English (Recommended) or in the input language, and record it on the `Language:` line of `status.md`. Later phases read it from there.
+
+Record the thresholds on the `Thresholds` line of `status.md`. They are fixed once the first evidence is gathered, in the same way as the falsification criteria: changing a threshold after seeing the evidence is moving the goalposts. If the user insists, record the change and the reason in `verdict.md`.
 
 **Checkpoint:** send `framing.md` with SendUserFile, then ask with AskUserQuestion: Approve / Change something (user explains via Other). Update `status.md` after approval.
 
@@ -230,4 +233,4 @@ Send `feature.md` with SendUserFile, finish with a two-sentence summary, and ask
 - Questions go through AskUserQuestion; files for review go through SendUserFile before the question is asked.
 - Keep every file short and scannable. Evidence is referenced, never duplicated.
 - Do not invent evidence, quotes or numbers. Unknown means unknown.
-- **Write every file in English,** whatever language the user writes in. You may talk to the user in their own language, but every file you write, including quotes you summarise, headings and file names, is in English.
+- **Output language:** English by default. If the user's input is in a language other than English, ask once in Phase 1, with AskUserQuestion, whether the files should be in English (Recommended) or in the language of the input, and record the choice on the `Language:` line of `status.md` (default `English`). Write every file in that language, including summaries of interview quotes (keep a quote in its original wording when it is quoted verbatim). Headings required by the feature contract, file and folder names, and status keywords (`approved`, `done`, `waiting`, and so on) always stay in English, so scripts and later skills keep working. You may always talk to the user in their own language.

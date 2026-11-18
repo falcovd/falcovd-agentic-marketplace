@@ -103,7 +103,7 @@ Then run `/adlc-toolkit:spec-to-plan` to get the prompt for the plan, and paste 
 
 ## Language
 
-Every file a skill writes is in English, whatever language you use. This covers `discovery/`, the spec files and `.adlc-project/`. The skills may talk to you in your own language, but never write files in it. One language keeps the output consistent from discovery to spec, so each stage can read the one before it.
+The files `product-discovery` and `feature-to-spec` write are in English by default. If your input is in another language, the skill asks once whether the files should be in English or in your language, and uses that choice for the whole run. Headings required by the contracts, IDs, file names and status keywords always stay in English, so the scripts and later skills keep working. The other skills follow the language of the document they build on (`spec-change`, `verify-against-spec`, `outcome-review`, `spec-to-plan`) or ask once (`init-adlc-project`). All skills may talk to you in your own language.
 
 ## Document contract
 
@@ -151,7 +151,7 @@ Guides a product owner from a feature idea or document to an approved PRD and a 
 
 - Critique rounds by the `spec-critic` agent (a read-only reviewer with a clean context), and explicit approval at each phase.
 - Open product questions are asked, not parked in the document.
-- Output: `feature.md`, `prd.md`, `spec.md` and `decisions.md`, all in English.
+- Output: `feature.md`, `prd.md`, `spec.md` and `decisions.md`, in English or in the language you choose.
 
 The critique rounds are run by the `spec-critic` agent (`agents/spec-critic.md`): a read-only reviewer with a clean context, with one checklist for the feature document, the PRD and the spec.
 

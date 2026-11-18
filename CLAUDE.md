@@ -29,7 +29,7 @@ A Claude Code plugin marketplace ("FalcovD Agentic Marketplace", identifier `fal
 
 ## Conventions
 
-- **Language:** every file a skill writes is in English, whatever language the user speaks. Skills may talk to the user in the user's language. New skills must say so.
+- **Language:** files a skill writes are in English by default. `product-discovery`, `feature-to-spec` and `init-adlc-project` ask once, when the input is not English, whether to write in English or the input language; the other skills follow the language of the document they build on. Structure (contract headings, IDs, file names, status keywords) stays English. Skills may talk to the user in the user's language. New skills must say which rule they follow.
 - **Instruction text:** text a skill writes into other projects (for example the `AGENTS.md` block) describes the project instead of commanding agents ("always", "you must", "ignore"), so prompt-injection detectors do not block it.
 - **Docs:** `docs/` and `specs/` are git-ignored local working notes. Anything that must be shared goes elsewhere. Do not cite IDs from those local notes in shared files such as `SCENARIOS.md`.
 - **Diagrams:** workflows and flows in READMEs are Mermaid (` ```mermaid `), not ASCII art. Directory trees stay as plain code blocks.

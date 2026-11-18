@@ -4,6 +4,9 @@ All notable changes to `adlc-toolkit` are recorded here. The format follows [Kee
 
 ## [Unreleased]
 
+### Changed
+- `product-discovery` and `feature-to-spec` ask once, when the input is not in English, whether the files are written in English or in the input language. Contract headings, IDs, file names and status keywords stay in English. `spec-critic` writes in the language of the document. `spec-change`, `verify-against-spec`, `outcome-review` and `spec-to-plan` follow the language of the document they build on, and `init-adlc-project` asks once.
+
 ## [0.3.0] - 2026-11-02
 
 ### Fixed

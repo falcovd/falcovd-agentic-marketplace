@@ -6,7 +6,7 @@ The document is based on `spec.md` as defined in `contracts/spec-document.md`. I
 
 ## Format
 
-One Markdown file per run, in English, saved next to `spec.md` as `verification-v1.md`, `verification-v2.md` and so on. An earlier version is never changed or deleted. The sections below appear in this order, with these exact `##` headings. A consumer finds a section by its heading.
+One Markdown file per run, in English or in the language of the document it builds on, saved next to `spec.md` as `verification-v1.md`, `verification-v2.md` and so on. An earlier version is never changed or deleted. The sections below appear in this order, with these exact English `##` headings. A consumer finds a section by its heading.
 
 ```markdown
 # <Feature name>: Verification v<N>
