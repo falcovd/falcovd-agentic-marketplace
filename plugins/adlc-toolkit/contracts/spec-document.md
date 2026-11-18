@@ -6,7 +6,7 @@ The spec says WHAT and WHY. It holds no technical solution, architecture or code
 
 ## Format
 
-One Markdown file, in English. The sections below appear in this order, with these exact `##` headings. A consumer finds a section by its heading. Every section is present. A section with nothing to say contains the word "None".
+One Markdown file, in English or in the output language the Product Owner chose (recorded on the first line of `decisions.md`). The sections below appear in this order, with these exact English `##` headings, whatever the language of the text below them. IDs and the word "None" also stay as written. A consumer finds a section by its heading. Every section is present. A section with nothing to say contains the word "None".
 
 ```markdown
 # <Feature name>: Spec

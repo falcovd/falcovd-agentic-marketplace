@@ -4,7 +4,7 @@ The feature document is the handover between discovery and requirements. `produc
 
 ## Format
 
-One Markdown file, in English. The sections below appear in this order, with these exact `##` headings. A consumer finds a section by its heading.
+One Markdown file, in English or in the output language the user chose (`Language:` in `status.md` of discovery, or the first line of `decisions.md`). The sections below appear in this order, with these exact English `##` headings, whatever the language of the text below them. A consumer finds a section by its heading.
 
 ```markdown
 # <Feature name>

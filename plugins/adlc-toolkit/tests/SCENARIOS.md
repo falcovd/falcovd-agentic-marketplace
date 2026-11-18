@@ -70,7 +70,11 @@ Prepare `AGENTS.md` before each run:
 
 ## S6: language
 
-- answer all questions in Dutch. The written files are in English.
+- start `product-discovery` and `feature-to-spec` with Dutch input. Each skill asks once whether the files are in English or Dutch.
+- choose English: all files are in English.
+- choose Dutch: the text is in Dutch, while the `##` headings, IDs, file names and status keywords stay in English. `status.md` has `Language: Dutch` and `decisions.md` starts with the language choice.
+- with the Dutch spec from above, run `spec-change`, `verify-against-spec` and `spec-to-plan`: each continues in Dutch without asking again, with English headings and IDs.
+- run `init-adlc-project` with Dutch input: it asks once for English or Dutch; the block markers and headings stay English.
 
 # Scenarios for product-discovery (Step 0, state detection)
 
